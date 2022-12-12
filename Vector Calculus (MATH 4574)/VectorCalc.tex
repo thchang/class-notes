@@ -1,0 +1,242 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Vector Calculus}
+Tyler Chang\\
+\today
+
+\subsection*{Definitions}
+
+\begin{itemize}
+\item {\it Scalar field}: a function $f : V \rightarrow F$ where $V$ is a vector
+space (usually $\mathbb{R}^2$ or $\mathbb{R}^3$) and $F$ is a field 
+(usually $\mathbb{R}$).
+\begin{itemize}
+\item For $V = \mathbb{R}^3$, this is often denoted: $f(x,y,z)$.
+\end{itemize}
+\item {\it Vector field}: a function $F : V \rightarrow V$ where $V$ is a vector
+space (usually $\mathbb{R}^2$ or $\mathbb{R}^3$).
+\begin{itemize}
+\item For $V = \mathbb{R}^3$, this is often denoted: 
+$F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$,
+where $\hat{i}$, $\hat{j}$, and $\hat{k}$ denote the unit basis vectors in the
+$x$, $y$, and $z$ directions.
+\end{itemize}
+\item A curve $C$ in $\mathbb{R}^2$ or a surface $S$ in $\mathbb{R}^3$ is
+{\it parameterized} by a function $\gamma(t)$ or $\gamma(u,v)$ if $\gamma$
+traces $C$ or $S$ while $t$ or $(u,v)$ are in the domain of $\gamma$.
+\begin{itemize}
+\item A curve $C$ parameterized by $\gamma(t)$, $t \in [a,b]$ is {\it closed}
+if $\gamma(a) = \gamma(b)$.
+\item A curve $C$ is {\it simple} if it does not cross itself anywhere.
+\item A set $D\subset\mathbb{R}^n$ is {\it connected} if every pair of points
+in $D$ can be connected by a curve in $D$, and {\it simply connected} if $D$
+is connected and every simple closed curve in $D$ encloses only points in $D$.
+\end{itemize}
+\item A curve $C$ is {\it positively oriented} if it is traced in the 
+counterclockwise direction by $\gamma(t)$.
+\item A surface $S$ with exactly two faces is {\it positively/outward/upward}
+oriented if all of its normal vectors point outward from the surface.
+\item For a scalar field $f$ on $\mathbb{R}^3$, the {\it gradient vector field}
+is denoted by: $\nabla f(x,y,z) = \langle f_x, f_y, f_z \rangle$, where 
+$f_x$, $f_y$, and $f_z$ denote the partial derivatives of $f$ w.r.t. $x$, $y$,
+and $z$ respectively.
+\item A vector field $F$ is said to be {\it conservative} if $F = \nabla f$ for
+some scalar field $f$ (called the {\it potential function}).
+\begin{itemize}
+\item In a conservative vector field, the work done moving a particle around
+a closed curve is 0. I.e., for a force $F$ and a closed curve $C$ parameterized
+by $\gamma$, the work done is given by $\int_C F \cdot d\gamma = 0$.
+\item In a conservative vector field, the work done in moving a particle from
+point $a$ to $b$ is independent of the path $\gamma(t)$.
+\end{itemize}
+\item For a vector field 
+$F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$, 
+the {\it divergence} of $F$ is given by 
+$$
+div(F) := \nabla \cdot F 
+= \frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}
++\frac{\partial R}{\partial z}.
+$$
+\begin{itemize}
+\item Physical intuition: Let $F$ represent fluid flow in $\mathbb{R}^3$ and
+let $p$ be a point in $\mathbb{R}^3$.
+Then if $div(F(p)) > 0$, the net flow of the fluid (flux) is outward
+at $p$; and if $div(F(p)) < 0$, the net flow of fluid is inward at $p$.
+\end{itemize}
+\item For a scalar field $f$, the {\it Laplacian} of $f$ is given by
+$$
+\bigtriangleup f := div( \nabla f)
+= \frac{\partial^2 f}{\partial x^2}+\frac{\partial^2 f}{\partial y^2}
++\frac{\partial^2 f}{\partial z^2}.
+$$
+\item For a vector field
+$F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$, 
+the {\it curl} of $F$ is given by
+$$
+curl(F) := \nabla \times F
+= \langle \frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}
+\text{, } \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}
+\text{, } \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}
+\rangle.
+$$
+\end{itemize}
+
+\subsection*{Surface and Line Integrals}
+
+In general, line and surface integrals are computed using the measure $\gamma$
+defined by $d\gamma = |\gamma'|dt$, where $\gamma$ parameterizes the
+line/surface.
+\begin{itemize}
+\item The {\it line integral} or {\it curve integral} of a scalar field
+$f : \mathbb{R}^2 \rightarrow \mathbb{R}$ over a curve $C$ in $\mathbb{R}^2$
+parameterized by $\gamma(t)$, $t \in [a,b]$ is given by:
+$$
+\int_C f d\gamma := \int_a^b f(\gamma(t))\|\gamma'(t)\|dt.
+$$
+\begin{itemize}
+\item Note: for a curve $C$, the negative orientation of $C$ is denoted $-C$.
+Let $\gamma(t)$ parameterize $C$ for $t\in[a,b]$.
+Then $\phi(t) = \gamma(a+b-t)$ traces $-C$ for $t\in[a,b]$, and
+$\phi$ $\int_{-C} f(x,y) d\phi = \int_C f(x,y) d\gamma$.
+\item Physical intuition: if $\rho(x,y)$ gives the density of a wire at
+all points $(x,y)$ defined over some curve $C \subset \mathbb{R}^2$, then
+$m = \int_C \rho d\gamma$ gives the {\it mass} of the wire, and the 
+{\it center of mass} is given by $(\bar{x}, \bar{y})$ where
+$\bar{x} = \frac{1}{m}\int_C x\rho(x,y) d\gamma$ and 
+$\bar{y} = \frac{1}{m}\int_C y\rho(x,y) d\gamma$.
+\item Note that $M_y := x\rho(x,y)$ is called the {\it moment} about the
+y-axis, and $M_x := y\rho(x,y)$ is called the moment about the x-axis.
+\item All the above still hold for a curve $C\in\mathbb{R}^3$ and a scalar
+field $f : \mathbb{R}^3 \rightarrow \mathbb{R}$.
+\end{itemize}
+\item The line integral of a vector field 
+$F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$ over a curve
+$C$ in $\mathbb{R}^3$ parameterized by $\gamma(t)$, for $(t) \in [a,b]$, is
+given by
+$$
+\int_C F \cdot d\gamma := \int_a^b F(\gamma(t)) \cdot \gamma'(t) dt.
+$$
+\begin{itemize}
+\item Note: Let $\gamma(t)$ parameterize $C$ for $t\in[a,b]$.
+Then $\int_{-C} F \cdot d\gamma = -\int_C F \cdot d\gamma$.
+\item Physical intuition: if $F(x,y,z)$ represents a force exerted on a
+particle at position $(x,y,z)\in\mathbb{R}^3$ and $\gamma(t)$ parameterizes
+the path travelled by that particle through space, then the work done in
+moving the particle from $\gamma(a)$ to $\gamma(b)$ is given by 
+$\int_C F\cdot d\gamma$.
+\end{itemize}
+\item The {\it surface integral} of a scalar field 
+$f : \mathbb{R}^3 \rightarrow \mathbb{R}$ over a surface $S$ parameterized
+by $\gamma(u,v)$, $(u,v) \in D$ is given by
+$$
+\int \int_S f(x,y,z) d\gamma 
+:= \int \int_D f\left(\gamma(u,v)\right)\|\gamma_u \times \gamma_v\| dA,
+$$
+where $\gamma_u$ and $\gamma_v$ denote the partial derivatives of $\gamma$
+w.r.t. $u$ and $v$ respectively, and $dA$ denotes the standard double integral
+over the region $D \subseteq \mathbb{R}^2$.
+\begin{itemize}
+\item Note: $\int \int_D \|\gamma_u \times \gamma_v\| dA$ gives the surface
+area of $S$.
+\item Physical intuition: If $\rho(x,y,z)$ is a density function defined over
+a surface $S$, then the mass of $S$ is given by 
+$m = \int\int_S \rho(x,y,z) d\gamma$, and the center of mass is given by
+$(\bar{x},\bar{y},\bar{z})$ where $\bar{x}$, $\bar{y}$, and $\bar{z}$ are
+defined similarly as in the case of the wire.
+\end{itemize}
+\item The {\it surface integral} of a vector field 
+$F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$ over a
+surface $S$ parameterized by $\gamma(u,v)$, $(u,v) \in D$ is given by
+$$
+\int \int_S F \cdot d\gamma 
+:= \int \int_D f\left(\gamma(u,v)\right) 
+\cdot \left(\gamma_u \times \gamma_v\right) dA,
+$$
+where $\gamma_u$ and $\gamma_v$ denote the partial derivatives of $\gamma$
+w.r.t. $u$ and $v$ respectively, and $dA$ denotes the standard double integral
+over the region $D \subseteq \mathbb{R}^2$.
+\begin{itemize}
+\item Physical intuition: if $F(x,y,z)$ represents the rate of fluid flow
+at a point $(x,y,z)$, then $\int\int_S F(x,y,z) \cdot d\gamma$ gives the
+{\it flux} of $F$ over $S$, i.e., the rate at which fluid is flowing out
+of $S$ (flux $>0$) or into $S$ (flux $<0$).
+\end{itemize}
+\end{itemize}
+
+\subsection*{Major Theorems}
+
+The following two theorems establish the fundamental properties of conservative
+vector fields as analogues to continuous functions.
+
+\subsubsection*{The Fundamental Theorem of Calculus for Line Integrals}
+
+Given a once continuously differentiable scalar field $f$ ($f\in C^1$)
+defined over a curve $C$ parameterized $\gamma(t)$ (for $t\in[a,b]$), 
+$\int_C \nabla f \cdot d\gamma = f(\gamma(b)) - f(\gamma(a))$.
+
+Note that as a corollary, it follows that every conservative vector field
+$F$ satisfies:
+\begin{itemize}
+\item Conservation of energy: For a closed curve $C$, 
+$\int_C F \cdot d\gamma = 0$.
+\item Independence of paths: For any two paths $C_1$ and $C_2$ satisfying 
+$\gamma_1(a) = \gamma_2(a)$ and $\gamma_1(b) = \gamma_2(b)$,
+$\int_{C_1} F \cdot d\gamma_1 = \int_{C_2} F(\gamma(t)) \cdot d\gamma_2$.
+\end{itemize}
+
+\subsubsection*{Conservative Vector Fields}
+
+Let $F(x,y) = P(x,y)\hat{i} + Q(x,y)\hat{j}$ be a a vector field, for which
+all first order partials exist and are continuous ($C^1$) in some simply
+connected domain $D$. Then, $F$ is conservative if and only if
+$\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$ for all 
+$(x,y) \in D$.
+
+\bigskip\medskip
+
+The remaining theorems establish a fundamental relationship between the value
+of an integral and its boundary, establishing a link between PDEs and
+boundary value problems.
+
+\subsubsection*{Green's Theorem}
+
+Let $C$ be a simple closed curve enclosing some region $D$ in $\mathbb{R}^2$.
+Then for a vector field $F(x,y) = P(x,y)\hat{i} + Q(x,y)\hat{j}$,
+$$
+\int_C P(x,y) dx + \int_C Q(x,y) dy = \int\int_D 
+\left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA.
+$$
+
+\subsubsection*{Stoke's Theorem}
+
+Let $S$ be a positively oriented surface in $\mathbb{R}^3$ (parameterized by 
+$\phi(u,v)$) enclosed by a curve $C := \partial S$ (parameterized by $\gamma(t)$).
+Let $F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$ be a vector field.
+Then
+$$
+\int_C F \cdot d\gamma = \int\int_S curl(F) \cdot d\phi.
+$$
+
+\subsubsection*{Gauss's (Divergence) Theorem}
+
+Let $E$ be a solid in $\mathbb{R}^3$ (of type 1, 2, or 3), and let $S$ be the surface
+bounding $E$ (with positive orientation) parameterized by $\gamma$.
+Let $F(x,y,z) = P(x,y,z)\hat{i} + Q(x,y,z)\hat{j} + R(x,y,z)\hat{k}$ be a vector field
+with continuous first order partial derivatives.
+Then
+$$
+\int \int_S F\cdot d\gamma = \int\int\int_E div(F) dV.
+$$
+
+\end{document}

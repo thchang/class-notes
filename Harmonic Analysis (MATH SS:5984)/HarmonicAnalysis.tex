@@ -1,0 +1,270 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{SS: Harmonic Analysis}
+Tyler Chang\\
+\today
+
+\subsection*{Fourier Series and Transforms on the Circle}
+
+In general, the Fourier series for a function $f$ is obtained by projecting
+$f$ onto the sine and cosine {\it basis functions} of the form:
+$\cos(nx)$ and $\sin(nx)$.
+
+Let $S^1$ denote the unit circle and suppose $f$ is real-valued.
+Note that in the $L^2(S^1)$ {\it inner product space}, the trigonometric
+polynomials are {\it orthogonal}:
+$$
+\begin{array}{lr}
+\int_0^{2\pi}\cos(nx)\cos(mx) = 0 & \text{if $n\neq m$}\\
+\int_0^{2\pi}\sin(nx)\sin(mx) = 0 & \text{if $n\neq m$}\\
+\int_0^{2\pi}\cos(nx)\sin(mx) = 0 & \text{for all $n,m$}.
+\end{array}
+$$
+It follows that when normalized by $\frac{1}{\sqrt{\pi}}$, the series:
+$$
+\frac{1}{\sqrt{2\pi}}
+\text{, }\frac{1}{\sqrt{\pi}}\cos(x)
+\text{, }\frac{1}{\sqrt{\pi}}\sin(x)
+\text{, }\frac{1}{\sqrt{\pi}}\cos(2x)
+\text{, }\frac{1}{\sqrt{\pi}}\sin(2x)
+\text{, }\ldots
+$$
+forms an {\it orthonormal basis} for some subspace of $L^2(S^1)$.
+
+The best $L^2$ approximation to $f$ in the span of these basis functions
+is therefore given by the {\it projection} onto the sine and cosine
+polynomials.
+Since they are orthonormal, this projection is easy to compute:
+$$
+f(x) \approx a_0\frac{1}{\sqrt{2\pi}}
++ a_1\frac{1}{\sqrt{\pi}}\cos(x)
++ b_1\frac{1}{\sqrt{\pi}}\sin(x)
++ a_2\frac{1}{\sqrt{\pi}}\cos(2x)
++ b_2\frac{1}{\sqrt{\pi}}\sin(2x)
++ \ldots
+$$
+where 
+$$\begin{array}{rll}
+a_0
+&=\langle f,\frac{1}{\sqrt{2\pi}}\rangle
+&=\int_0^{2\pi}f(x)\frac{1}{\sqrt{2\pi}}dx,\\
+a_n
+&=\langle f,\frac{1}{\sqrt{\pi}}\cos(nx)\rangle
+&=\int_0^{2\pi}f(x)\frac{1}{\sqrt{\pi}}\cos(nx)dx,\\
+b_m
+&=\langle f,\frac{1}{\sqrt{\pi}}\sin(mx)\rangle
+&=\int_0^{2\pi}f(x)\frac{1}{\sqrt{\pi}}\sin(mx)dx.
+\end{array}$$
+
+More generally, if $f$ is a complex-valued function, and we allow $S^1$ to have
+any length $L$, we can perform the same analysis with the basis functions 
+$$
+\frac{1}{\sqrt{L}}
+\text{, }\frac{\sqrt{2}}{\sqrt{L}}\cos(2\pi x/L)
+\text{, }\frac{\sqrt{2}}{\sqrt{L}}i\sin(2\pi x/L)
+\text{, }\frac{\sqrt{2}}{\sqrt{L}}\cos(4\pi x/L)
+\text{, }\frac{\sqrt{2}}{\sqrt{L}}i\sin(4\pi x/L)
+\text{, }\ldots
+$$
+where the sine polynomials now carry an $i$ out front and each function is 
+normalized by $L$.
+
+Using {\it Euler's identity} and folding the normalizing terms $\frac{1}{L}$ 
+into the coefficients $\hat{f}(n)$, the Fourier series for any function
+on the circle $S^1$ (or equivalently, any function that is periodic
+over an interval $[a,b]$ of length $L$) can be written:
+$$
+f(x) \approx \sum_{n=-\infty}^\infty \hat{f}(n) e^{2\pi inx/L}
+\quad\text{ where }\quad
+\hat{f}(n)
+=\frac{1}{L}\langle f, e^{2\pi inx/L}\rangle
+=\frac{1}{L}\int_a^bf(x)e^{-2\pi inx/L}dx.
+$$
+The function $\hat{f}(n)$ that gives Fourier coefficients is known as the 
+{\it Fourier transform} of $f$.
+
+As a consequence of the {\it Weierstrass Approximation Theorem} and the
+fact that Fourier series is the $L^2$ projection of $f$, we obtain the
+{\it inverse theorem}:
+$$
+\lim_{N\rightarrow\infty} S_N := \sum_{n=-N}^N \hat{f}(x)e^{2\pi inx/L} \rightarrow f(x).
+$$
+Note that the above convergence is w.r.t. $\|.\|_{L^2}$ and may not be uniform.
+
+In fact, if $f$ is just $\alpha$-H{\"o}lder continuous, then the convergence
+will be uniform, and the rate of convergence for the partial sums
+$S_N \rightarrow f(x)$ will be
+proportional to the order of differentiability.
+If $f$ is discontinuous but still almost everywhere $\alpha$-H{\"o}lder smooth, 
+the above still holds except in some neighborhood of the discontinuities, 
+where the convergence can be highly non-uniform.
+This is known as the {\it Gibbs phenomenon}.
+
+Two other important theorems are
+\begin{itemize}
+\item Parseval's Identity: 
+$\sum_{n=-\infty}^\infty|\hat{f}(n)|^2 = \frac{1}{\sqrt{L}}\|f\|_2^2$,
+which can be thought of as a generalization of the Pythagorean theorem, and
+\item General Parseval:
+$\sum_{n=-\infty}^\infty\hat{f}(n)conj(\hat{g}(n)) = \frac{1}{\sqrt{L}}\langle f,g\rangle$,
+where the $conj()$ denotes the complex conjugate.
+\end{itemize}
+
+\subsection*{Wavelets}
+
+An alternative interpretation of the Fourier series is the {\it wavelet}
+approach.
+Note that $\hat{f}(n)$ intuitively tells us how well $f$ aligns with a pure 
+wavelet of frequency $n$.
+So, by checking how well $f$ aligned with every wavelet, we can reconstruct $f$.
+By this interpretation, the partial sums
+$S_N = \sum_{n=-N}^N\hat{f}(n)e^{inx}$ can be interpreted as {\it convolutions}
+with the {\it Dirichlet kernel}: 
+$D_N(x) = \sum_{n=-N}^N e^{inx} = \frac{\sin\left((N+1/2)x\right)}{\sin(x/2)}$:
+$$
+S_N = (f * D_N)(x) := \frac{1}{2\pi}\int_{-\pi}^\pi f(y) D_N(x-y) dy.
+$$
+Any kernel $K_N$ which satisfies the following three properties
+is a ``good kernel,'' meaning  
+$\lim_{N\rightarrow\infty} (f * K_N)$ converges uniformly to $f$:
+\begin{enumerate}
+\item $\frac{1}{\sqrt{2\pi}} \int_{-\pi}^\pi K_N(x) dx = 1$ for all $N\geq 1$,
+\item $\int_{-\pi}^\pi|K_N(x)|dx \leq M$ for some fixed $M$ for all $N\geq 1$,
+and
+\item 
+$\int_{\delta\leq|x|\leq\pi}|K_N(x)|dx \rightarrow 0$ as $N\rightarrow\infty$
+\end{enumerate}
+
+Unfortunately, $D_N$ fails property (3) since its radius of influence shrinks
+too slowly.
+However, if $f$ is ``nice enough'' (e.g., $f$ has some level of 
+smoothness), the uniform convergence is still recovered since $f$ makes up
+for the slow convergence of $D_N$.
+
+\subsection*{Fourier Analysis on the Real Line}
+
+Now we will extend the previous analysis to the entire real line, as opposed
+to just the unit circle $S^1$.
+When we do this, the discrete transform $\hat{f}(n)$ becomes a continuous
+function $\hat{f}(\xi)$.
+Then the continuous analogue of the discrete series is the integral:
+$$
+f(x) \approx \int_\mathbb{R} \hat{f}(\xi)e^{2\pi i\xi x} d\xi
+$$
+where the continuous transform $\hat{f}$ of a frequency $\xi\in\mathbb{R}$ is 
+given by:
+$$
+\hat{f}(\xi) = \int_\mathbb{R} f(x)e^{-2\pi i\xi x} dx.
+$$
+
+Note that the previous theorems (inverse theorem and parseval) 
+have continuous analogues, given that $f$ is a ``nice'' function.
+To denote the space of nice functions, we will say that $f$ is 
+{\it Schwartz function} ($f \in \cal{S}(\mathbb{R})$) if $f$ is
+infinitely-differentiable and $\sup_{x\in\mathbb{R}}|x|^k|f^{(\ell)}(x)|$
+is bounded for all $k,\ell\geq 0$.
+The analogues of the above theorems are given by:
+\begin{itemize}
+\item Inverse theorem: for $f \in \mathcal{S}(\mathbb{R})$,
+$f(x) = \int_\mathbb{R} \hat{f}(\xi)e^{2\pi i\xi x} d\xi$.
+\item Plancharel's Theorem: If $f\in \mathcal{S}(\mathbb{R})$, then 
+$\|\hat{f}\|_{L^2} = \|f\|_{L^2}$ (can be thought of as the limit of Parseval).
+\item Good Kernels: Same three properties, but instead denoted $K_\delta$ were
+$\delta$ is a continuous variable describing the radius of $K_\delta$.
+Consequently, for property (3) we will take $\delta\rightarrow 0$ in contrast
+to the bounded case where we took $N\rightarrow\infty$.
+\end{itemize}
+
+\subsection*{Fourier Analysis in $\mathbb{R}^d$}
+
+The idea is that we will define our function in polar coordinates then
+extend all definitions and theorems similarly as before.
+The Schwartz space extends to $\mathcal{S}(\mathbb{R}^d)$ where
+$f\in\mathcal{S}(\mathbb{R}^d)$ if
+$\sup_{x\in\mathbb{R}^d}|x^\alpha (\frac{\partial}{\partial x})^\beta f(x)|$
+is finite for all {\it multi-indices} $\alpha,\beta$.
+The Fourier transform of $f\in\mathcal{S}(\mathbb{R}^d)$ is given by
+$$\hat{f}(\xi) = \int_{\mathbb{R}^d} f(x) e^{-2\pi i \langle x,\xi \rangle}.$$
+The inverse theorem and plancharel both still hold for 
+$f \in\mathcal{S}(\mathbb{R}^d)$.
+
+The same definition of good kernels extends to kernels 
+$K \in\mathcal{S}(\mathbb{R}^d)$ 
+In a quick connection to probability theory, it is known that the Gaussian 
+kernels $K_\delta(x) = \frac{1}{\sqrt{\delta}}e^{-\pi x^2/\delta}$ are a 
+family of good kernels under this extended definition.
+This means that any function $f$ can be reconstructed by testing how well
+it aligns with every shift of $K_\delta$ as $\delta\rightarrow 0$.
+
+\subsection*{Finite Fourier Analysis}
+
+If we take $f$ to instead be a function over some finite Abelian group $G$, then
+we can define $f$ similarly and repeat all the Fourier analysis.
+However, for a group $G$ of cardinality $N$, the first $N$ basis functions
+form a complete orthonormal basis for all of space.
+These basis functions are the $N$ roots of unity: $e^{-2\pi i k /N}$.
+The {\it Fast Fourier Transform} (FFT) is a recursive algorithm for computing
+all $N$ projections (discrete Fourier transforms) in $\mathcal{O}(N\log N)$ 
+time.
+
+\subsection*{Some Applications}
+
+The Fourier series was originally proposed as the solution to the standing
+wave equation:
+$u(x,t) = \phi(x)\psi(t),$ and to the heat equation:
+$\frac{\partial u}{\partial t} = \triangle u$
+where $\triangle u$ denotes the Laplacian of $u$.
+
+In the realm of number theory, the discrete Fourier series is also used in the
+proof of Dirichlet's Theorem.
+In engineering domains, Fourier series are used for signal compression and 
+reconstruction, solving inverse problems such as the Radon transform.
+In physics, Fourier transforms can be used to derive the Heisenberg uncertainty 
+principle and Huygen's principle.
+
+\subsection*{Fractals and the Hausdorff Dimension}
+
+The {\it Hausdorff dimension} of a set $E$, is the natural dimension
+in which $E$ has nontrivial measure.
+This can be computed by defining the Hausdorff measure:
+$$
+H^\varepsilon_\alpha(E) = \inf_{B_j} \sum_{j=1}^n r_j^\alpha
+$$
+where $B_j$ are balls of radius $r_j < \varepsilon$ that cover $E$.
+Then let 
+$H_\alpha := \lim_{\varepsilon\rightarrow 0^+} H^\varepsilon_{\alpha}(E)$.
+
+Let $\alpha_0$ satisfy $H_\alpha(E) = \infty$ for $\alpha < \alpha_0$ and 
+$H_\alpha(E) = 0$ for $\alpha > \alpha_0$.
+Then the Hausdorff dimension of $E$ is given by:
+$$dim_{H}(E) := \alpha_0.$$
+That is, $dim_H(E)$ is the smallest dimension in which $E$ has finite measure
+and the largest dimension in which $E$ has nonzero measure.
+For sets, where $dim(E)$ is obvious, $dim_H(E)$ agrees with our intuition.
+However, this definition also allows for $dim_H(E)$ to take non-integer values
+(i.e., consider the Cantor set).
+Such sets are called {\it fractals}.
+
+{\it Frostman's lemma} states that a compact set $A$ has Hausdorff dimension
+of at least $s$ if and only if there exists a probability measure $\mu$
+supported on $A$ and a constant $C$ such that $\mu(B(x,r)) \leq Cr^s$ for all
+balls $B(x,r)$ of radius $r$.
+For each such $\mu$, we can further derive a finite energy integral:
+$$
+I_s(\mu) = \int \int |x-y|^{-s} d\mu(x) d\mu(y) = M < \infty.
+$$
+Then we can use a Fourier transform of the measure $\mu$ to derive the inverse
+statement.
+
+\end{document}

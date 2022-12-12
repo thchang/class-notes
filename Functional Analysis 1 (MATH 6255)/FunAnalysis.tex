@@ -1,0 +1,324 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Functional Analysis}
+Tyler Chang\\
+\today
+
+\subsection*{Banach and Hilbert Spaces}
+
+A {\it norm space} $(X,\|.\|)$ is a vector space $X$ together with a norm
+$\|.\|$. Such a space is called a {\it Banach space} if $X$ is 
+{\it complete} under the metric topology induced by $d(x,y) = \|x - y\|$.
+Note that every norm space has a {\it completion} that is Banach. Also
+note that in a finite dimensional space, all norms induce equivalent
+topologies since for every pair of norms $\|.\|_1$ and $\|.\|_2$ and
+all points $x\in X$, there exists a uniform constant $1 < c< \infty$
+such that $\frac{1}{c}\|x\|_2 \leq \|x\|_1 \leq c\|x\|_2$.
+
+A {\it linear functional} $\ell$ on $(X,\|.\|)$ is a linear
+function $\ell : X \rightarrow \mathbb{R}$ or $\mathbb{C}$.
+$\ell$ is said to be {\it bounded} if $|\ell(x)| \leq c\|x\|$
+for all $x\in X$ and $c < \infty$.
+Equivalently, $\ell$ is bounded if and only if $\ell$ is continuous.
+Every norm space $(X, \|.\|_X)$ has a {\it dual} $(X', \|.\|_{X'})$
+given by the vector space $X'$ of all bounded linear functionals $\ell$
+on $X$, together with the norm
+$$
+\|\ell\|_{X'} = {\sup \atop {x\neq 0 \atop x\in X}} \frac{|\ell(x)|}{\|x\|_X}
+= {\sup \atop \|x\|_X = 1} |\ell(x)|.
+$$
+In the special case of $L^p$ (or $\ell^p$), we have for $1\leq p < \infty$,
+$(L^p(X))' = L^q(X)$ where $\frac{1}{p} + \frac{1}{q} = 1$ (Riesz
+Representation). It immediately follows that $L^p$ is {\it reflexive} 
+(meaning $(L^p)'' = L^p$) for $1 < p < \infty$, and $(L^2)' = L^2$.
+Furthermore, we have the H{\"o}lder Inequality: If 
+$\frac{1}{r} = \frac{1}{q} + \frac{1}{p}$ and $a\in\ell^p$, $b\in\ell^q$,
+then $\|ab\|_r \leq \|a\|_p \|b\|_q$.
+
+An {\it inner product} or {\it scalar product} space 
+$(X, \langle \cdot\text{, }\cdot \rangle)$ is a vector space $X$
+together with a scalar product 
+$\langle\cdot\text{, }\cdot\rangle : X \times X \rightarrow F$
+(where $F = \mathbb{R}$ or $\mathbb{C}$) that satisfies
+\begin{itemize}
+	\item Bilinearity: If $F = \mathbb{R}$, then
+		$\langle\cdot\text{, }\cdot\rangle$ is linear in the first
+		and second arguments. If $F = \mathbb{C}$, then
+		$\langle\cdot\text{, }\cdot\rangle$ is linear in the first
+		argument and {\it sesquilinear} in the second
+		($\langle x,\alpha y\rangle={\bar\alpha}\langle x,y\rangle$).
+	\item Symmetry/Skew Symmetry: If $F = \mathbb{R}$, then
+		$\langle x, y\rangle = \langle y, x\rangle$.
+		If $F = \mathbb{C}$, then
+		$\langle x, y\rangle = \overline{\langle y, x\rangle}$.
+	\item Positivity: $\langle x,x \rangle > 0$ if $x\neq 0$
+		(and $\langle 0, 0 \rangle = 0$ by linearity).
+\end{itemize}
+Every scalar product induces a norm $\|x\|^2 = \langle x, x\rangle$.
+If $X$ is complete under the topology induced by this norm (i.e., 
+$(X, \|.\|)$ is Banach), then $(X, \langle\cdot\text{, }\cdot\rangle)$
+is called a {\it Hilbert space}. Note that since $(L^2)' = L^2$,
+$L^2$ is a Hilbert space under $\langle f, g \rangle = \int f{\bar g}$.
+In fact, every Hilbert space is isomorphic to its dual.
+
+Every inner product $\langle\cdot\text{, }\cdot\rangle$ that induces a
+norm $\|.\|$ satisfies the following identities:
+\begin{itemize}
+	\item Cauchy-Schwarz: $|\langle x,y\rangle| \leq \|x\|\|y\|$.
+	\item Parallelogram Law: $\|x+y\|^2+\|x-y\|^2=2(\|x\|^2+\|y\|^2)$.
+	\item Polarization ID: 
+		$\langle x,y\rangle=\frac{1}{4}\sum_{k=0}^3 i^k\|x+i^k y\|^2$.
+\end{itemize}
+Furthermore, given a norm space $(X, \|.\|)$, there exists an inner product
+$\langle\cdot\text{, }\cdot\rangle$ such that $\langle x,x\rangle = \|x\|^2$
+if and only if $\|.\|$ satisfies the parallelogram law. Furthermore, that
+inner product is given by the polarization identity.
+
+Given a set of vectors $S$ in a Hilbert space $H$, the span of $S$ is
+given by the set of all finite linear combinations of elements in $S$.
+I.e., span~$S$ is the smallest subspace of $H$ containing $S$.
+Note that in the infinite-dimensional case, span~$S$ need not be
+closed (as it is in the finite dimensional case).
+A collection of vectors $S$ in $H$ is said to be {\it orthonormal}
+if their {\it projections} $\langle y_\alpha, y_\beta\rangle = 0$
+($y_\alpha \perp y_\beta$)
+for all $\alpha\neq\beta$ and $\langle y_\alpha, y_\alpha\rangle =1$.
+An orthonormal set is called an orthonormal {\it basis} if the 
+closure of its span satisfies $\overline{\text{span}}$~$S=H$.
+It follows that for any orthonormal set $S$:
+\begin{itemize}
+	\item (Parseval's ID) If $S$ is basis for $H$, then 
+		$\|x\|^2=\sum_{e_\alpha\in S}|\langle x,e_\alpha\rangle|^2$
+		for all $x\in H$.
+	\item (Bessel's Ineq) In general, 
+		$\|x\|^2\geq\sum_{e_\alpha\in S}|\langle x,e_\alpha\rangle|^2$
+		for all $x\in H$.
+\end{itemize}
+Every Hilbert space has a basis, which can be orthogonalized
+using the Gram-Schmidt process. So, by identifying basis vectors,
+we see that two Hilbert spaces are isomorphic if and only if their
+bases have equal cardinalities. It follows that every Hilbert space
+of countably infinite dimension is isomorphic to $L^2$.
+
+\subsection*{Important Theorems}
+
+{\bf Zorn's Lemma}
+
+Let $S$ be a partially ordered set (poset) under a relation ($\leq$)
+such that every totally ordered subset has an upper bound. Then $S$
+has a maximal element under the relation ``$\leq$.''
+
+\underline{Notes on Zorn's Lemma}:\\
+In the infinite-dimensional case, Zorn's lemma is often used in place
+of induction in a process called ``Zornification.''
+\bigskip
+
+{\bf Hahn-Banach Theorem}
+
+Let $X$ be a vector space over $F = \mathbb{R}$ or $\mathbb{C}$ and
+let $p$ be a positive real-valued function on $X$ that
+satisfies
+\begin{itemize}
+	\item Positive homogeneity: for $a\in\mathbb{R}_+$ (where in the
+		complex case, $\mathbb{R}_+$ denotes the positive half-plane)
+		and $x\in X$, $p(ax) = |a| p(x)$.
+	\item Sub-additivity: for $x,y\in X$, $p(x+y) \leq p(x) + p(y)$.
+\end{itemize} 
+Let $Y$ be a subspace of $X$ and let $\ell : Y \rightarrow F$ be a linear
+functional on $Y$ such that $|\ell(y)| \leq p(y)$ for all $y\in Y$
+($p$ dominates $\ell$).
+Then $\ell$ can be extended to a linear functional on $X$ that is still
+dominated by $p$.
+\bigskip
+
+{\bf Clarkson's Theorem}
+
+Let $X$ be a norm space that is uniformly convex.
+Also let $z\in X$ and let $K$ be a closed convex subset of $X$.
+Then there exists a unique point $y_0\in K$ that solves:
+$$
+\|x - y_0\| = \inf_{y\in K} \|z - y\| = dist(z,k).
+$$\bigskip
+
+{\bf Riesz's Lemma}
+
+Let $Y$ be a closed proper subspace of a norm space $X$.
+Then there exists a unit vector $z\in X$ such that for all $y\in Y$,
+$\|z - y\| \geq \frac{1}{2}$.
+
+\underline{Notes on Riesz's Lemma}:\\
+It follows from Riesz's Lemma that in an infinite-dimensional space,
+the closed unit ball is not compact (as it is in the finite-dimensional
+case). This inspires the {\it weak topology}, the weakest topology in 
+which all $\ell\in X'$ are continuous. I.e., $x_n \rightarrow x$ weakly
+if $|\ell(x_n) - \ell(x)| \rightarrow 0$ for all $\ell \in X'$.
+Under the weak topology, the closed unit ball is indeed compact.
+Furthermore, if $x_n \rightarrow x$ in the weak topology, then 
+$\{x_n\}$ either does not converge in the norm topology, or
+$\|x_n - x\| \rightarrow 0$.
+\bigskip
+
+{\bf Baire Category Theorem}
+
+Let $X$ be a complete metric space and let $X = \cup_{n=1}^\infty S_n$
+(where $\{S_n\}$ is countable). Then at least one $S_n$ is {\bf not}
+nowhere dense.
+\bigskip
+
+{\bf Principle of Uniform Boundedness}
+
+Let $X$ be a complete metric space and let $\mathcal{F}$ be a collection
+of real-valued continuous functionals on $X$.
+If $\mathcal{F}$ is {\it pointwise bounded} ($|f(x)|\leq M(x)$ for all 
+$x\in X$ and $f\in\mathcal{F}$), then there exists an open set $U\subset X$
+in which $\mathcal{F}$ is {\it uniformly bounded}
+($|f(x)|\leq M<\infty$ for all $x\in U$ and $f\in\mathcal{F}$).
+In the special case where $\mathcal{F}$ are sub-additive and absolutely
+homogeneous (most commonly, when $\mathcal{F}$ are linear) and $X$ is
+Banach with norm $\|.\|$, $\mathcal{F}$ is uniformly bounded on the entire
+space $X$:
+$|f(x)| \leq c\|x\|$ for $c <\infty$.
+\bigskip
+
+{\bf Open Mapping Theorem}
+
+Every bounded linear map $M : Y \rightarrow Y$ is {\it open}
+(If $U$ is open, so is $M(U)$).
+\bigskip
+
+{\bf Closed Graph Theorem}
+
+Let $X$ and $Y$ be Banach and let $M : X \rightarrow Y$ be a linear
+operator. We call $\Gamma(M) = \{(x, Mx) : x\in X\}$ the {\it graph}
+of $M$. We say $M$ is {\it closed} if its graph is closed in
+$X\times Y$ under the norm $\|(x,y)\| = \|x\|_X + \|y\|_Y$.
+The closed graph theorem says that if $M$ is closed, then $M$ is
+bounded.
+
+\subsection*{Bounded Linear Operators}
+
+Let $T$ be a linear operator $T : X \rightarrow Y$, where $X$, $Y$
+are Banach.
+Then $T$ is bounded if 
+\begin{equation}
+	\|T\| = {\sup\atop {x\in X \atop x\neq 0}}
+	\frac{\|Tx\|_Y}{\|x\|_X}
+	= {\sup \atop \|x\|_X = 1} \|Tx\|_Y 
+\end{equation}
+is bounded by some constant $M$. Furthermore, we consider the Banach space
+$\mathcal{L}(X,Y)$ of all bounded linear functionals from $X$ to $Y$ under
+the norm defined in (1). Other useful topologies on $\mathcal{L}(X,Y)$
+include the {\it strong operator topology} (the weakest topology in which 
+$T : X \rightarrow Y$ is continuous for all $T\in\mathcal{L}(X,Y)$) and
+the {\it weak operator topology} (the weakest topology in which 
+$T : X \times Y' \rightarrow F$ is continuous for all 
+$T\in\mathcal{L}(X,Y)$).
+
+If $V \subset X$ is a subspace of $X$ then
+\begin{itemize}
+	\item The {\it annihilator} $V^\perp$ of $V$ is given by the set
+		of all linear functionals $\ell \in X'$ that vanish on
+		$V$. I.e., for all $\ell \in V^\perp$ and $y \in V$,
+		$\ell(y) = 0$.
+	\item $X / V$ denotes the {\it quotient space}, i.e., the space of
+		equivalence classes $[x]$ such that $[x] = [z]$ for
+		$x,z\in X$ and $x-z \in V$.
+\end{itemize}
+
+If $X$, $Y$ are Hilbert spaces, then we can define the {\it transpose} of
+a linear operator $T$ as the operator $T' \in \mathcal{L}(Y',X')$ such that
+$\langle x, T'\ell\rangle = \langle Tx, \ell \rangle$ for all $x\in X$ and
+$\ell\in Y'$. Similarly, the {\it Hermitian adjoint} of $T$ is the operator
+$T^* \in \mathcal{L}(Y,X)$ such that 
+$\langle T^* x, y\rangle = \langle x, Ty \rangle$ for all $x\in X$ and
+$y\in Y$. Such an operator $T\in\mathcal{L}(X,X)$ is said to be {\it symmetric}
+or {\it self-adjoint} if $T^* = T$. 
+
+In the special case where $X = Y$, we denote $\mathcal{L}(X,X)$ by
+$\mathcal{L}(X)$. A few notable linear operators in 
+$\mathcal{L}(L^2(\mathbb{R}))$ and $\mathcal{L}(L^2(\mathbb{R}_+))$ are
+the Fourier and Laplace transforms respectively. If an operator
+$T \in \mathcal{L}(X)$ is bijective, then it follows by the open
+mapping theorem that its inverse $T^{-1}$ exists. The space
+$\mathcal{GL}(X)$ of all invertible operators on $X$ is itself a
+subspace of $\mathcal{L}(X)$, and furthermore, $\mathcal{GL}(X)$ is a
+two-sided ideal under multiplication. Let $K \in \mathcal{L}(X)$
+such that $K = I + E$, where $\|E\| < 1$ and $I$ denotes the identity
+on $X$. Then $K \in \mathcal{GL}(X)$ and its inverse is given by the
+{\it Neumann series} $K^{-1} = \sum_{n=0}^\infty (-1)^n E^n$, which
+converges geometrically.
+
+An operator $C\in\mathcal{L}(X,Y)$ is said to be {\it compact} if $C(B_1(0))$
+(where $B_1(0)$ denotes the unit ball in $X$) is precompact in $Y$. The
+space $\mathcal{C}(X,Y)$ of compact operators between $X$ and $Y$ is itself
+a closed proper subspace of $\mathcal{L}(X,Y)$. Let $C \in \mathcal{C}(X)$
+and let $T = I - C$, where $I$ denotes the identity on $X$. Then the $T$
+is invertible and its Neumann series converges. Furthermore, if $N_T$
+denotes the nullspace of $T$ and $R_T$ denotes the range of $T$, then
+\begin{itemize}
+	\item The sequence $N_{T^n}$ $k=1,\ldots,\infty$ saturates at
+		some finite value
+		$N_{T^N} = \lim_{n\rightarrow\infty} N_{T^n}$.
+	\item The dimension of $N_T$ is given by 
+		$\text{dim }N_T = \text{dim }(X /R_T)$.
+\end{itemize}
+These statements hold trivially in the finite-dimensional case (the
+second statement is equivalent to the statement that dim~$X = R_T + N_T$).
+However, in the infinite-dimensional case they generally fail. For a general
+operator $K \in \mathcal{L}(X)$, the discrepancy dim~$N_T - $~dim$(X/R_T)$ is
+called the {\it Fredholm index} of $K$.
+
+\subsection*{Spectral Theory}
+
+For a general operator $T \in \mathcal{L}(X)$, the {\it resolvent set} is
+given by $\rho(T)=\{\lambda\in\mathcal{C}:(\lambda I-T)\in\mathcal{GL}(X)\}$.
+The {\it spectrum} of $T$ is then given by 
+$\sigma(T) = \mathbb{C}\setminus\rho(T)$. For every
+operator, the spectrum satisfies $\sigma(T)\subseteq \overline{B_{\|T\|}(0)}$
+where $\overline{B_{\|T\|}(0)}$ denotes the closed ball of radius $\|T\|$
+centered at the origin. Furthermore, $\sigma(T)$ is always closed and
+nonempty. Unfortunately, for a general operator $T\in\mathcal{L}(X)$,
+$\sigma(T)$ can be uncountable and may contain elements that are {\bf not}
+eigenvalues for $T$. This makes the spectrum difficult to work with for
+a general bounded linear operator.
+
+However, for a compact operator $C \in \mathcal{C}(X)$, every
+$\lambda_j \neq 0$ in $\sigma(C)$ {\bf is} an eigenvalue of $C$, the
+spectrum of $C$ is at most countably infinite, and the only possible
+accumulation point for $\lambda_j \in \sigma(C)$ is $0$. Furthermore,
+if $C$ is self-adjoint and compact, we can conclude that $C$ is
+diagonally dominated in the sense that $\|T\| = \max(\lambda_+, -\lambda_-)$
+where $\lambda_+={\sup\atop\|u\|=1}\langle Tu,u\rangle$
+and $\lambda_-={\inf\atop\|u\|=1}\langle Tu,u\rangle$.
+Furthermore, the sup and inf are both attained, and
+$\lambda_+ = \max(\sigma(T))$, $\lambda_- = \min(\sigma(T))$.
+It follows that for $C\in\mathcal{C}(X)$ where $X$ is a separable Hilbert
+space and $C$ is self-adjoint, $C$ has an {\it eigenbasis}, i.e., there
+exists an orthonormal basis $\{x_n\}_{n=1}^\infty$ for $X$ such that
+$Cx_n = \lambda_n x_n$. For example, the Laplace transform is a compact
+self-adjoint operator in $\mathcal{C}(L^2(\mathbb{R}_+))$, with
+$\lambda_+ = \sqrt{\pi}$ where $(\sqrt{\pi},t^{-1/2})$ is an Eigenpair.
+
+More generally, for $C\in\mathcal{C}(X)$ where $X$ is a Hilbert space and
+$C=C^*$, we have the {\it max-min} and {\it min-max principles}:\\
+Let $S_n$ denote any $n$-dimensional subspaces of $X$. Then if
+$$
+\alpha_n=\max_{S_n}\min_{u\in S_n\atop\|u\|=1}\langle Tu,u\rangle,
+\qquad\text{\bf or }\qquad
+\alpha_n=\min_{u\in S_n\atop\|u\|=1}\max_{S_n}\langle Tu,u\rangle,
+$$
+then $\alpha_1 \geq \alpha_2 \geq \ldots \geq 0$, and all non-zero
+$\alpha_j$ are eigenvalues of $T$.
+
+\end{document}

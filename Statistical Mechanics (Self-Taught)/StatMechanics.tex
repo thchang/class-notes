@@ -1,0 +1,189 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Statistical Mechanics}
+Tyler Chang\\
+\today
+
+\subsection*{Basics and Terminology}
+
+\begin{itemize}
+\item For a discrete random variable $X$, the average or {\it expected value}
+of $X$ is given by $\langle X \rangle := \sum_i X_i P_i$ where $X_i$ are the 
+possible values of $X$ and $P_i$ are the probabilities of those values.
+\item For a continuous variable $x$ with PDF $P(x)$, the expected value is
+$\mathbb{E}[x] := \int x P(x) dx$.
+\item {\it Entropy} is a measure of how much information has been lost.
+\begin{itemize}
+\item For a discrete variable $X_i$ with probabilities $P_i$, entropy is given
+by $S := -\sum_i P_i \log(P_i)$.
+\item For a continuous variable $x$ with PDF $P(x)$, entropy is given by
+$S := -\int P(x) \log P(x) dx$.
+\item The basic unit of entropy is $\log(2)$ and is called a {\it bit}.
+\item If the exact state of a variable $X$ is known with 100\% certainty,
+then the entropy is always $0$, and if nothing is known then the entropy
+is maximized.
+\item For physical systems, the entropy is often thought of as being
+parameterized by the energy with higher energy configurations having greater
+entropies.
+\end{itemize}
+\item The {\it temperature} of a system is defined by 
+$T := \frac{\partial E}{\partial S}$.
+\item The {\it Boltzmann constant} $\kappa_B$ is a conversion factor between
+human units (such as temperature) and laboratory units.
+It varies depending on the actual units, but is usually proportional to
+$\kappa_B \approx 10^{-23} \frac{{\text Joules}}{\text{Kelvins}}$.
+\item The fluctuation of a system given by the deviation from the mean value,
+and is computed 
+$\sigma^2:=\langle\left(x-<x>\right)^2\rangle=\langle x^2\rangle-\langle x\rangle^2.$
+\end{itemize}
+
+Statistical mechanics is an alternative to classical mechanics used when the
+initial conditions, laws of motion, and outside forces of a system cannot
+be known with 100\% accuracy.
+
+Consider a system whose initial condition is known to be contained in 
+a blob $B$ in phase space with volume $V_B$.
+Then Liouville's theorem states that after any finite amount of time,
+if we could track the trajectories of all the particles in $B$ exactly,
+they would be located in a new blob of phase space $B^*$ with volume $V_B$.
+In this scenario, the number of phase points $(x, p)$ and their corresponding
+probabilities would be preserved (though they would correspond to new
+locations), so the entropy would remain constant.
+As seen here, perfect preservation of information corresponds to stationary
+entropy, while in general, entropy tends to increase as information is lost
+over time.
+
+\subsection*{The Laws of Thermodynamics}
+
+\underline{\bf The First Law}:
+The First Law of Thermodynamics states that for a closed system, energy is a 
+conserved quantity: $\frac{dE}{dt} = 0$.
+More generally, $dE = -P dV + T dS$ where $E$ is energy, $P$ is pressure, $T$
+is temperature $V$ is volume, and $S$ is entropy.
+Then the function $Q$ defined by $dQ := T dS$ is called the heat function and
+the function $W$ defined by $dW := P dV$ is called the work function.
+Clearly, for a closed system there is no time dependence so $\frac{dE}{dt} = 0$,
+but it is also interesting to note that $W$ and $Q$ are not well-defined
+functions since $dQ$ and $dW$ are not generally conservative.
+
+\underline{\bf The Second Law}:
+The Second Law of Thermodynamics states that entropy always increases.
+This is because of the fact that information is always lost, since every
+computation is inexact.
+These errors compound, until we are maximally uncertain of the state of the
+system.
+This does {\bf not} imply that a system can never return to its initial 
+conditions.
+In fact, the chaotic nature of most systems ensures that after a finite amount
+of time the system will come arbitrarilly close to any configuration in phase
+space.
+In particular, it can and will return arbitrarilly close to its initial
+conditions in the future.
+The time it takes (on average) for a system to return to some initial state
+is called the {\it Poincar{\'e} recurrence}, and is proportional to
+$e^{S_0 - S_t}$ where $S_0$ is the entropy of the initial state and $S_t$ is
+the total entropy of the system.
+
+\underline{\bf The Zeroth Law}:
+For two systems $A$ and $B$ that are allowed to share energy, the first law
+tells us that $\dot{E}_A + \dot{E}_B = 0$, and the second law tells us that
+$\dot{S}_A + \dot{S}_B > 0$.
+Also, recall that $T = \frac{\partial E}{\partial S}$.
+These equations are enough to show that if $T_A > T_B$, then energy will flow
+from system $A$ into system $B$ until $T_A = T_B$, a state called 
+{\it thermal equilibrium}.
+
+\subsection*{The Boltzmann Distribution}
+
+Consider the question of what distribution of states we should expect to see
+in a meta system composed of several identical subsystems that share energy.
+Let the states of the subsystems be given by $X_i$, with energy $E_i$ and
+entropy $S_i$.
+The problem of maximizing the number of ways to achieve a certain distribution
+such that the total energy is conserved is equivalent to the problem of
+maximizing the entropy.
+The {\it Boltzmann distribution} is the probability distribution $P_i$ over
+the states $X_i$ that maximizes the entropy of the system.
+In the discrete case, it is given by $P_i := \frac{1}{z} e^{-\beta E_i}$ where
+$z := \sum_i e^{-\beta E_i}$ is called the {\it partition function}, and
+$\beta := \frac{1}{T}$ is the inverse temperature.
+In the continuous case, it is identical except 
+$z \rightarrow \int e^{-\beta E(x)} dx$.
+
+So, in summary, the distribution of states for a set of interacting subsystems 
+is typically given by the Boltzmann distribution (of maximum entropy).
+Furthermore, note that the Boltzmann distribution favors states of low energy
+over states of high energy, meaning most of the states will have low energy.
+The state of lowest energy is called the {\it ground state}.
+Given the Boltzmann distribution, the expected energy and entropy of any 
+individual subsystem are given by
+$$
+\langle E \rangle = -\frac{\partial\log z}{\partial\beta}
+\qquad\text{ and }\qquad
+\langle S \rangle = \beta E + \log z.
+$$
+
+\subsection*{Ideal Gas and the N-Body Problem}
+
+For a large number of noninteracting particles (ideal gas) in a closed system
+of volume $V$, the Boltzmann distribution equations for average energy and
+entropy tell us that
+$$
+E - TS = -T\log z.
+$$
+The pressure of the system is defined as $P := -\frac{\partial E}{\partial V}$.
+It follows that $PV = \kappa_B NT$, or equivalently
+$$
+\qquad\qquad\qquad P = \kappa_B \rho T \qquad\text{(Ideal Gas Law)}
+$$
+where $\rho$ is the density of the particles.
+
+Now we will consider weakly interacting gas particles, with a potential energy
+given by $u_0$.
+For a small enough $u_0$, it suffices to consider only the first term in the
+Taylor polynomial expansion of the energy function (or equivalently, only 2
+body interactions).
+We conclude that 
+$P \approx \left(\rho T + \frac{1}{2}\rho^2 u_0\right)\kappa_B$.
+For more precision, we could consider up to N-body interactions, but typically
+$\rho u_0 <<< T$ and the ideal gas laws are a sufficiently good approximation.
+
+\subsection*{The Ising Model}
+
+The {\it Ising model} approximate the Hamiltonian (energy) of a system
+consisting of $N$ particles in a $d$-dimensional lattice by considering
+only interactions between neighboring particles (denoted $\sigma_i$).
+$$
+H(\sigma) = -\sum_{i = 1}^N\sum_{j=1}^{i-1} J_{i,j}\sigma_i^2\sigma_j^2
+- \mu \sum_{i=1}^N h_i \sigma_i^2
+$$
+where each $\sigma_i^2 \in \{-1, 1\}$, and $J_{i,j} \neq 0$ if and only if
+$\sigma_i$ and $\sigma_j$ are neighbors. To ``solve'' the Ising model, one
+typically looks for the distribution of states $\sigma$ as a function of
+inverse temperature ($\beta$) or the minimum/maximum energy states.
+
+In the simple case where the connections ($J_{i,j}$) between all neighbors
+are equal to some constant $J$, and the energy for each particle's spin
+($h_i$) is equal to some constant $h$ we arrive at
+$\sigma = \tanh\left((-2dJ\sigma + h)\beta\right)$, where $\sigma$ denotes
+the expected value of a discrete variable that is either $1$ or $-1$.
+In the case of magnets, $\sigma$ could represent the alignment of the magnetic 
+particles or the presence of an attractive particle.
+In either case, we discover that due to the non-uniqueness of the solutions
+to this equation, there is a discontinuity in the surface of solutions that
+corresponds to a {\it phase transition} where $\sigma$ snaps from
+$\sigma \approx 0$ to $\sigma \approx 1$. The Ising model is appropriate for
+$d\geq 2$ since for $d=1$, it cannot predict phase transitions.
+
+\end{document}

@@ -1,0 +1,288 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Real Analysis 2}
+Tyler Chang\\
+\today
+
+\subsection*{Differentiation Theory}
+
+To define the derivative of a function $F$, consider {\it Dini's derivatives}
+which exist for all $x$:
+$$ \begin{array}{ccc}
+({\overline D}^+ F)(x) := \limsup_{h\rightarrow 0^+} \frac{F(x+h) - F(x)}{h} & &
+({\underline D}^+ F)(x) := \liminf_{h\rightarrow 0^+} \frac{F(x+h) - F(x)}{h} \\
+& \\
+({\overline D}^- F)(x) := \limsup_{h\rightarrow 0^+} \frac{F(x) - F(x-h)}{h} & &
+({\underline D}^- F)(x) := \liminf_{h\rightarrow 0^+} \frac{F(x) - F(x-h)}{h}.
+\end{array} $$
+If all four Dini's derivatives are equal, then we say that the {\it derivative}
+$F'(x)$ exists and
+$$F'(x) := \lim_{y\rightarrow x} \frac{F(y) - F(x)}{|y-x|}.$$
+If $F : [a,b] \rightarrow \mathbb{R}$ is differentiable for all $x\in[a,b]$, 
+then we say that $F$ is {\it differentiable}.
+Similarly, if $F$ is differentiable except on a null set, we say $F$ is 
+{\it almost everywhere differentiable}.
+
+First, consider which classes of functions are a.e. differentiable?
+Measurability, boundedness, and even continuity are not enough to ensure 
+differentiability.
+As a counterexample, the Weierstrass function
+is bounded and continuous, but nowhere differentiable:
+$$
+F(x) = \sum_{n=1}^\infty a^{-n} \cos(b^n\pi x) 
+\qquad\text{for $a > 1$ and $\frac{b}{a} > 1 + \frac{3}{2}\pi$.}
+$$
+It is the oscillations of the cosine function that break differentiability.
+In fact, all measurable monotone functions are a.e. differentiable 
+({\it Monotone differentiation theorem}).
+However, a stronger statement can be made.
+
+Let the {\it total variation} of $F$ be given by:
+$$
+\|F\|_{TV(\mathbb{R})} 
+:= \sup_{x_0<x_1<\ldots<x_n} \sum_{i=1}^n |F(x_i) - F(x_{i-1})|
+$$
+where the supremum is taken over all finite increasing sequences.
+A function $F$ is said to have {\it bounded variation} ($F \in BV(\mathbb{R})$)
+if $\|F\|_{BV} := \|F\|_{TV} = M < \infty$.
+Every function of bounded variation can be decomposed into the difference
+between two bounded monotone nondecreasing functions: $F = F^+ - F^-$.
+It follows that every $f\in BV(R)$ is a.e. differentiable.
+Note: every Lipschitz continuous function $f$ satisfies $f\in BV(\mathbb{R})$.
+
+We would like to extend the two {\it fundamental theorems of calculus} to the
+a.e. differentiable case using Lebesgue integrals instead of Riemann integrals.
+However, the theorems are harder to prove in the Lebesgue case, given that for 
+$F$ a.e. differentiable, both {\it Rolle's theorem} and the 
+{\it Mean Value Theorem} in general fail.
+
+The analogue of the first fundamental theorem is:
+
+\hangindent 12pt
+\underline{The Lebesgue Differentiation Theorem}:
+Let $f : \mathbb{R}\rightarrow\mathbb{C}$ be $L^1$ and let 
+$F : \mathbb{R}\rightarrow\mathbb{C}$ be the Lebesgue integral:
+$F(x) = \int_{-\infty}^x f(t) dt$.
+Then $F$ is continuous and a.e. differentiable, and $F'(x) = f(x)$ for
+a.e. $x\in\mathbb{R}$.
+
+The 2nd FTC is much harder to show.
+Indeed, it fails in general for both monotone and continuous functions.
+Instead, we must introduce a new notion that is stronger than both 
+{\it continuity} and {\it uniform continuity}:
+
+A function $F : \mathbb{R} \rightarrow \mathbb{R}$ is 
+{\it absolutely continuous} ($F\in AC(\mathbb{R})$) if 
+for all $\varepsilon >0$, there exists $\delta > 0$ such that
+for all collections of disjoint intervals $\{(a_j, b_j)\}$ that satisfy
+$\sum_{j=1}^n |b_j - a_j| \leq \delta$,
+$\sum_{j=1}^n |F(b_j) - F(a_j)| \leq \varepsilon$.
+
+\hangindent 12pt
+\underline{2nd FTC for AC Functions}:
+Let $F \in AC([a,b])$ for all compact $[a,b] \subset \mathbb{R}$.
+Then $F'$ exists and $\int_a^b F' = F(b) - F(a)$.
+Conversely, for $f \in L^1([a,b])$, there exists an $F \in AC([a,b])$
+such that $F' = f$ a.e. and $F(x) = \int_a^x f$.
+
+\subsection*{$L^p$ Spaces}
+
+Extending the notion of the $L^1$ class, define the class of $L^p$ functions
+as follows for any $p$:
+$$
+f \in L^p(X) \iff \int_X |f(x)|^p d\mu < \infty.
+$$
+For $p > 1$, the exponent $p$ increases the rate at which $f$ decays, making
+this a broader class than $L^1$.
+Taking the limit as $p \rightarrow \infty$, we say that $f\in L^\infty$
+if $|f|$ is bounded by some $M < \infty$ almost everywhere.
+For $p \geq 1$, $L^p$ is a {\it norm space} under the norm 
+$$
+\|f\|_{L^p} = \left(\int |f|^p \right)^{1/p}.
+$$
+If $p < 1$, then $L^p$ is only a {\it quasi-norm space}.
+
+Under the metric induced by $\|.\|_{L^p}$, both the 
+addition $+ : L^p \times L^p \rightarrow L^p$ and multiplication 
+$\cdot : \mathbb{C} \times L^p \rightarrow L^p$ operations are jointly 
+continuous (under the product topology).
+Therefore, we say that $L^p$ is a {\it toplogical vector space}.
+Furthermore, $L^p$ is actually an infinite-dimensional {\it Banach space},
+i.e., a {\it complete metric space}, and satisfies the {\it Hausdorff property}.
+Put in practical terms, this means that for every {\it Cauchy sequence} in an 
+$L^p$ space, the limit exists and is unique.
+
+The {\it Riesz Representation Theorem} tells us about the {\it dual space}
+$\left( L^p \right)^*$.
+For $\frac{1}{p} + \frac{1}{q} = 1$, $(L^p)^* = L^q$.
+That is, for any {\it linear functional} $\ell \in (L^p)^*$, there exists a
+unique $g \in L^q$ such that $\ell(f) = \int f \overline{g}$.
+For $1 < p < \infty$, $L^p$ space is {\it reflexive}, meaning 
+$(L^p)^{**} = L^p$.
+Furthermore, in the special case where $p = 2$, $(L^2)^* = L^2$.
+Therefore, $L^2$ space is a {\it Hilbert space} (complete inner product space)
+under the inner product
+$$
+\langle f, g \rangle := \int f \overline{g}
+\qquad\text{for all $f,g \in L^2$.}
+$$
+
+\subsection*{Basic Functional Analysis}
+
+One of the fundamental theorems of functional analysis is:
+
+\hangindent 12pt
+\underline{The Baire Category Theorem} (BCT): Let $(X,d)$ be a complete metric
+space, and let $\{E_n\}_{n=1}^\infty$ be a countable sequence of subsets of
+$X$.
+If $\cup_{n=1}^\infty E_n \supset B$ for any ball $B$ in $(X,d)$, then there
+exists a nonempty sub-ball $B' \subset B$ in which at least one $E_n$ is dense.
+
+Using BCT, we categorize topological sets.
+Note, that the analogies are informal:
+
+\begin{tabular}{|l|l|l|}
+\hline
+Name of set & Definition & Analogy in a measure space\\
+\hline
+Meager (1st category) & An at most countable union of & null sets\\
+ & nowhere dense sets & \\
+\hline
+2nd category & Any set that is not 1st category & sets of positive measure \\
+\hline
+Co-meager (residual) & $E$ is co-meager if $E^C$ is meager & full-measure sets\\
+\hline
+Baire (almost open) & $E$ is Baire if $E \bigtriangleup U$ is meager & 
+measurable sets\\ 
+& for some open set $U$ & \\
+\hline
+\end{tabular}
+
+BCT has several important corollaries involving {\it linear operators}
+(linear maps $T : X \rightarrow Y$ between norm spaces).
+If $T$ satisfies $\|T\| := \sup_{x\in X}\frac{\|Tx\|_Y}{\|x\|_X} = M < \infty$,
+then $T$ is called a {\it bounded linear operator}.
+
+\hangindent 12pt
+\underline{The Uniform Boundedness Principle} (UBP):
+Let $X$ be a Banach space and $Y$ be a general norm space, and let
+$\{T_\alpha\}_{\alpha\in A} : X \rightarrow Y$ be a family of bounded linear 
+operators.
+Then the following are equivalent:
+\begin{itemize}
+\item (Pointwise boundedness) For all $x\in X$, the collection in $Y$ given by
+$\{T_\alpha x : \alpha \in A\}$ is bouned in $Y$-norm.
+\item (Uniform bounedness) The operator norms $\{\|T_\alpha\| : \alpha\in A\}$
+are uniformly bounded (i.e., they are all bounded by some finite constant).
+\end{itemize}
+
+For a general function $f : X \rightarrow Y$ where both $X$ and $Y$ are
+topological spaces, $f$ is an {\it open map} if for all open $U \in X$, 
+$f(U)$ is open in $Y$.
+That is, $f$ maps open sets to open sets.
+Contrast this with a {\it continuous map}, where $f^{-1}(U)$ is open in $X$
+for all $U$ open in $Y$.
+
+\hangindent 12pt
+\underline{The Open Mapping Theorem} (OMT):
+Let $T : X \rightarrow Y$ be a bounded linear operator between Banach
+spaces $X$ and $Y$.
+Then the following are equivalent:
+\begin{itemize}
+\item $T$ is onto (surjective).
+\item $T$ is open.
+\item (Qualitative solvability) For all $y\in Y$, there exists $x\in X$ such
+that $Tx = y$.
+\item (Quantitative solvability) For all $y\in Y$, there exists $x\in X$ such
+that $Tx = y$ and $\|x\|_X \leq M\|y\|_Y$ for some constant $M$.
+\item (Quantitative solvability on a dense subclass) There exists a constant
+$M > 0$ such that for any dense subset $E$ of $Y$, there exists $x\in X$
+such that $Tx = y$ for all $y \in E$ and $\|x\|_X \leq M\|y\|_Y$.
+\end{itemize}
+
+\hangindent 12pt
+\underline{The Closed Graph Theorem} (CGT):
+Let $T:X\rightarrow Y$ be a linear operator between Banach spaces.
+Then the following are equivalent:
+\begin{itemize}
+\item $T$ is continuous.
+\item $T$ is closed: I.e., the graph $\Gamma := \{(x,Tx) : x\in X\}$
+is closed under the product topology $X \times Y$.
+\item $T$ is weakly continuous: I.e., there exists some topology $\mathcal{F}$
+on $Y$, weaker than the norm topology but still Hausdorff, such that
+$T : X \rightarrow (Y,\mathcal{F})$ is continuous.
+\end{itemize}
+
+\subsection*{Infinite Dimensional Spaces and Weak Topologies}
+
+In an infinite dimesional space (such as $L^p(\mathbb{R})$), it is
+difficult to formulate compactness arguments due to the failure of
+the {\it Heine-Borel Theorem}, which tells us that
+in a finite dimensional metric space, 
+the following definitions of compactness are equivalent.
+$X$ is compact if:
+\begin{itemize}
+\item (Compactness) Every open cover of $X$ has a finite subcover.
+\item (Sequential Compactness) Every sequence $\{x_n\}$ in $X$ has a convergent 
+subsequence.
+\item (Closed and Boundedness) $X$ is closed and bounded.
+\end{itemize}
+
+To see what can go wrong in an infinite dimensional space, consider the 
+closed unit ball $B$.
+Intuitively, since $B$ is closed and bounded, it should be compact.
+However, in an infinite-dimesional space, one can construct an infinite
+sequencei $\{e_j\}$, each of whose elements is the unit basis vector in a new 
+dimension.
+Then no subsequence of $\{e_j\}$ converges.
+
+To recover a friendlier topology in infinite-dimensional space, consider
+the following weaker topology:
+Let $(X,\|.\|)$ be a normed space.
+For each $\ell \in X^*$ (bounded), define the seminorm 
+$\rho_\ell(x) := |\ell(x)|$.
+Then the {\it weak topology} is the topology generated by all open
+strips/balls of the form: $B_r^\ell(x):=\{y\in X: \rho_\ell(x-y) < r\}$.
+Similarly, the weak$^*$ topology on $X^*$ is generated by all seminorms
+of the form $\rho_x(\ell) := |\ell(x)|$.
+Under the weak topology on a reflexive separable Banach space $X$,
+the closed unit ball is indeed sequentially compact.
+
+We have already been briefly introduced to the {\it norm operator topology} 
+(NOT).
+Let $X,Y$ be Banach spaces and let $B(X,Y)$ be the collection of all 
+bounded linear operators $T : X \rightarrow Y$.
+Then $B(X,Y)$ is a norm space under:
+$$
+\|T\| := \sup_{x\in X\text{, }x\neq 0}\frac{\|Tx\|_Y}{\|x\|_X}
+\qquad\text{for all $T\in B(X,Y)$}.
+$$
+Similarly as above, we also introduce the {\it strong operator topology}
+(SOT) and {\it weak operator topology} (WOT).
+SOT is the topology induced by seminorms $\rho_x(T) := \|Tx\|$ for all
+$x\in X$,
+and WOT is the topology induced by seminorms 
+$\rho_{x,\ell}(T) := |\ell(Tx)|$ for all $x\in X$ and $\ell \in Y^*$.
+
+SOT and WOT are generally used in arguments of convergence:
+\begin{align*}
+T_n \rightarrow T \text{ in SOT iff: }& \|T_n x - Tx\| \rightarrow 0
+\text{ for all $x \in X$.}\\
+T_n \rightarrow T \text{ in WOT iff: }& |\ell(T_n x) - \ell(Tx)| \rightarrow 0
+\text{ for all $x \in X$, $\ell\in Y^*$.}
+\end{align*}
+In order of strength, convergence in NOT is stronger than in SOT is stronger 
+than in WOT.
+
+\end{document}

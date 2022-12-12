@@ -19,6 +19,6 @@ In the future, I may also upload (less polished) notes from post-dissertation co
 ## Directory structure
 
 Each directory is named for a corresponding topic.
-Additionally, the name should indicate where I learned this information, and if relevant, the course number.
+Additionally, the name should indicate where I learned this information, and if relevant, the course number from Virginia Tech or ``UG`` if I learned some parts as an undergraduate student at Virginia Wesleyan University.
 Inside each directory, the main document that I would want to view should be named ``README``, so that GitHub will display it in the browser.
 If relevant, these directories may also contain additional source files.

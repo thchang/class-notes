@@ -1,0 +1,170 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Classical Mechanics}
+Tyler Chang\\
+\today
+
+\subsection*{Basic Definitions}
+
+\begin{itemize}
+\item In classical mechanics, a {\it closed system} consists of states and
+laws of motion. Given any state, called an {\it initial condition} the laws
+of motion should allow one to perfectly predict the future and past.
+\begin{itemize}
+\item Every state must map to exactly one new state under the laws of motion.
+\item That is, the laws must be {\it deterministic} and {\it reversible}.
+\item No information can be lost in such a system, i.e., there can be no
+singularities.
+\end{itemize}
+\item A quantity that does not change with time is said to be {\it conserved}.
+\item Newton's laws govern most physical systems:
+\begin{enumerate}
+\item[1.] In the absense of a force, velocity is constant (special case of 2).
+\item[2.] $F = m\ddot{x} = \dot{p}$, where $m$ is mass, $x$ is position,
+and $p:=m\dot{x}$ is {\it momentum}.
+\item[3.] $\sum_{ij} F_{ij} = 0$, where $F_{ij}$ is the force between particles
+$i$ and $j$.
+It follows, $\frac{d}{dt} p_{total} = F_{total} = 0$, so momentum is conserved.
+\end{enumerate}
+\item For a force $F$ dependent on position, the {\it potential energy} $V$ is 
+given by the potential function $F =: -\nabla V$.
+\item The {\it kinetic energy} is given by $T(\dot{x}) := \frac{m}{2}\dot{x}^2$.
+\item The total {\it energy} of a system is given by $E := T + V$, and is 
+a conserved quantity ($\frac{d}{dt} E = 0$).
+\item An {\it inertial reference frame} is a reference frame in which
+Newton's laws hold.
+\item The {\it phase space} of a system with $n$ coordinates is the 
+$2n$ dimensional space obtained by considering both position and momentum.
+\end{itemize}
+
+Newton's laws of motion and the corresponding notions of energy and momentum
+are only one of many equally legitimate sets of laws and definitions.
+In the following sections, we will derive several frameworks in which
+all classical mechanics can be cast.
+
+\subsection*{The Principle of Stationary Action and Lagrangian}
+
+The {\it action} of a system is given by the functional
+$$
+S[q(t)] := \int_{t_1}^{t_f} L[q(t),\dot{q}(t),t] dt,
+$$
+where $L$ is called the {\it Lagrangian} and the integral is taken over
+some path through phase space.
+{\it The principle of stationary action} states that the laws of motion are
+given by the path through phase space for which the action is {\it stationary} 
+(either a minimum, maximum, or saddle point) for fixed start and end points
+$q(t_1)$ and $q(t_f)$.
+
+Given an arbitrary Lagrangian, one can solve for the resulting path using 
+{\it calculus of variations}.
+The solution is given by the {\it Euler-Lagrange equations}:
+$$
+\frac{\partial L}{\partial x}=\frac{d}{dt}\frac{\partial L}{\partial\dot{x}}.
+$$
+Of course, for an arbitrary Lagrangian, the notion of momentum may not
+be well-defined, so we define the momentum by
+$$
+p := \frac{\partial L}{\partial \dot{x}} \qquad\text{ and it follows that } 
+\qquad\dot{p} = \frac{\partial L}{\partial x}.
+$$
+
+A continuous transformation is given by any transformation of the form 
+$$\delta x_i = f_i(x) \varepsilon$$
+where $\delta x_i$ is the change in the $i$th component of position and $f_i$ is
+any continuous function of position. 
+Such a tranformation is called a {\it symmetry} if it doesn't affect the 
+Lagrangian ($\delta L = 0$).
+Given a symmetry, there exists a quantity $Q = \sum_i p_i f_i$ that
+is conserved ($\frac{d}{dt}Q = 0$).
+For example, if the Lagrangian is rotationally invariant (rotation
+is a symmetry), then angular momentum is a conserved quantity.
+
+To recover Newton's equations, one can use the following Lagrangian 
+$$
+L(x, \dot{x}) = T(\dot{x}) - V(x)
+$$
+where $T(\dot{x})$ and $V(x)$ are the kinetic and potential energies as defined
+in Newton's formula.
+More generally, for an arbitrary Lagrangian, if $L$ can be expressed as the
+difference between a quadratic function of $\dot{x}$ and a function of $x$,
+we can define the kinetic energy to be the function of $\dot{x}$ and the
+potential energy to be the function of $x$.
+
+\subsection*{The Hamiltonian}
+
+The Hamiltonian is given by
+$$
+H(x, \dot{x}, t) := \langle p, \dot{x} \rangle - L(x, \dot{x}, t)
+$$
+where $\langle \cdot , \cdot \rangle$ denotes the dot product.
+In systems where there exists a notion of energy, the energy is defined
+to be the Hamiltonian.
+If the Lagrangian has no explicit dependence on time ($L(x, \dot{x})$) then
+the Hamiltonian/energy is conserved.
+
+Hamilton's equations of motion are then given by
+$$
+\dot{p} = \frac{\partial H}{\partial x} \qquad\text{ and }\qquad
+\dot{x} = \frac{\partial H}{\partial p}.
+$$
+
+Recall that a flow is said to be {\it incompressible} if the volume of inflow
+is equal to the volume of outflow for all regions, or equivalently, if 
+the flow maps regions to regions of equal volume.
+This is the analogue to determinism and reversibility in a continuous state
+space.
+
+\underline{Liouville's Theorem}: The flow in phase space (for any Hamilton
+equations) is incompressible, i.e., $div(V) = 0$, where $V$ is the vector field
+describing the laws of motion in phase space for some Hamiltonian.
+
+One final important piece of notation is the {\it Poisson bracket}.
+The brackets are defined for two functions $F$ and $G$ in phase space:
+$$
+\{F,G\} := \sum_i \left(
+\frac{\partial F}{\partial x_i}\frac{\partial G}{\partial p_i} -
+\frac{\partial F}{\partial p_i}\frac{\partial G}{\partial x_i} \right).
+$$
+If $F(p,x)$ is a force in some system governed by a Hamiltonian $H$, then 
+$\dot{F} = \{F, H\}$.
+Also, if $G$ is a conserved quantity, then $\{G, H\} = 0$.
+
+\subsection*{Electrostatics}
+
+Magnetic fields (in the absense of monopoles) are incompressible 
+vector fields that describe a force on charged particles.
+The {\it Lorentz equation} describes the forces on a charged particle in
+the presence of a stationary electromagnetic field:
+$$
+F = \frac{e}{c}\left(-\nabla V + (\dot{x} \times B)\right)
+$$
+where $E = -\nabla V$ is the electric field, $B$ is the magnetic field,
+$e$ is the charge of the particle, and $c$ is the speed of light.
+
+Note that since $B$ is incompressible, $B$ can be expressed as the curl
+of some other field $B = \nabla \times A$, where $A$ is called the
+{\it vector potential}.
+Of course, since $\nabla \times \nabla S = 0$ for any scalar field $S$
+(called the Gauge),
+$A$ is not unique and can be {\it Gauge transformed} without affecting
+the magnetic field $B$.
+However, the choice of Gauge does not affect the equations of motion so
+this is not an issue.
+
+The Lagrangian that yields Lorentz's equations of motion is
+$$
+L(x, \dot{x}) = \frac{m}{2}\dot{x}^2 + \frac{e}{c}(A \cdot \dot{x}).
+$$
+
+\end{document}

@@ -1,0 +1,184 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Number Theory}
+Tyler Chang\\
+\today
+
+\subsection*{Elementary Number Theory}
+
+One of the main focuses of number theory is understanding the properties
+of prime numbers.
+But first, the primes must be rigorously defined:
+
+\begin{itemize}
+\item $b$ {\it divides} $a$ (or $a$ is a {\it divisor} of $b$) if there exists 
+$q \in \mathbb{Z}$ such that $a = bq$. 
+Denoted $a | b$.
+Note that for all $b$, $1 | b$ and $b | b$ trivially.
+\item An integer $a$ has an {\it inverse} $a^{-1}$ if and only if there exists
+$a^{-1}\in\mathbb{Z}$ such that $a a^{-1} = a^{-1} a = 1$ (where $1$ is the 
+{\it multiplicative identity} of $\mathbb{Z}$).
+\item In the ring $\mathbb{Z}$, it is true that the only numbers with inverses
+are $1$ and $-1$.
+We capture this by stating that $1$ and $-1$ are {\it units} of the integers.
+\item A {\it prime} $p$ is a positive integer strictly greater than $1$ that
+has no positive divisors besides $1$ and itself, any other number is called
+a {\it composite}.
+\item The {\it greatest common divisor} (GCD) of two positive integers
+$a$ and $b$ (denoted: $gcd(a,b)$) is the largest integer that divides both 
+$a$ and $b$.
+\item Two positive integers $a$ and $b$ are {\it relatively prime} or 
+{\it coprime} if $gcd(a,b) = 1$.
+\end{itemize}
+
+The {\it Euclidean algorithm} states that for $a,b \in\mathbb{Z}$,
+there exist unique integers $q$ and $r$ with $0\leq r < b$ such that
+$$
+a = qb + r 
+\text{ where $q$ is the {\it quotient} and $r$ is the {\it remainder}.}
+$$
+Though this appears to be a theorem, by rearranging terms we see that always
+$gcd(a,b) | r$.
+Then we can iterate as follows until $r_n = 0$ to find $gcd(a,b) = r_{n-1}$:
+$$
+\begin{array}{rcl}
+a &=& q_0 b + r_0\\
+b &=& q_1 r_0 + r_1\\
+r_0 &=& q_2 r_1 + r_2\\
+&&\vdots
+\end{array}
+$$
+The {\it extended Euclidean algorithm} states
+that for all $a,b \in\mathbb{Z}$, there exist $x,y\in\mathbb{Z}$ such that
+$ax + by = gcd(a,b)$.
+As a corollary:
+\begin{itemize}
+\item If $a$ and $b$ are coprime if and only
+if there exist $x,y\in\mathbb{Z}$ such that $ax + by = 1$.
+\item If $p$ is prime and $p | (q_1 q_2 \ldots q_n)$, then $p$ must
+divide {\it at least one} $q_i$.
+\end{itemize}
+
+The {\it Fundamental Theorem of Arithmetic} states that every integer
+has a unique prime factorization.
+
+\subsection*{Generalization to Arbitrary Rings}
+
+For cryptography, we will work in the ring of positive integers modulo
+$m$.
+Note that all the above definitions generalize when $\mathbb{Z}$
+is instead an arbitrary ring $R$, though several important theorems
+(with the exception of the Euclidean algorithm) fail.
+Notably,
+\begin{itemize}
+\item $1$ and $-1$ are no longer the only units. In fact, if $R$ is the
+integers modulo $m$, every element that is coprime to $m$ is a unit.
+\item There may exist {\it zero divisors} or {\it characteristics}: 
+elements $p$ such that $qp = 0$ for all $q$.
+\end{itemize}
+
+\subsection*{RSA}
+
+We are now ready to derive RSA encryption.
+Let $x$ be some data to be encrypted, represented as a binary integer.
+Let $m=pq$ where $p$ and $q$ are primes, and $m$ is large.
+The RSA encryption and decryption functions are respectively given by:
+$$E(x) = x^e \text{ mod $m$} \quad\text{and}\quad
+D(x) = x^d \text{ mod $m$}$$
+where $ed \equiv 1 \text{ mod } (p-1)(q-1)$.
+
+Since the primes are not well understood, it is prohibitively difficult to 
+factorize $m$ into $p$ and $q$ (for $m$ sufficiently large).
+This means that one can share $e$ and $m$, so that anyone can encrypt messages.
+But only those with the private keys
+$p$, $q$, and $d$ can decrypt messages.
+This is called {\it public key encryption}.
+
+To understand how the decryption function undoes the encryption function is
+a deep exercise in number theory, starting with the {\it Binomial Theorem.}
+
+\textbf{The Binomial Theorem}
+Let $R$ be a commutative ring, and let $n \in \mathbb{N}$.
+Then for all $x,y \in R$, $(x+y)^n = \sum_{k=0}^{n} {n \choose k} x^{n-k}y^{k}$.
+
+But if $n$ happens to be a characteristic, all the terms other than $x^n$ and
+$y^n$ drop out and we get:
+
+\textbf{The Freshman's Dream}
+Let $R$ be a ring with characteristic $p$, where $p$ is a prime.
+Then $(x+y)^p = x^p + y^p$.
+
+Then by using the Freshman's dream in an inductive argument, we can show:
+
+\textbf{Fermat's Little Theorem}
+Let $p$ be a prime.
+Then for all $a \in \mathbb{N}$, $a^p \equiv a$ mod $p$.
+
+\textbf{Corollary}
+Let $p$ be a prime.
+Then if $p$ does not divide $a$, $a^{p-1} \equiv 1$ mod $p$.
+
+From the corollary, it follows that $D(E(x)) = x$ if $e$ is chosen to be a 
+large prime.
+Put formally:
+
+\textbf{RSA}
+Let $x \in \mathbb{Z}$ and let $e$ be a large prime.
+Let $d$ be an integer such that $ed \equiv 1$ mod $(p-1)(q-1)$.
+Then $x^{ed}$ (mod m) $= x$.
+
+\subsection*{Prime Gaps}
+
+Given that RSA (the standard public key encryption scheme) depends on
+inability to perform prime factorization, it makes sense to study the
+distribution of primes.
+If all the primes were clustered in some meaninful way, or conversely, if
+they were {\it too} evenly spaced, then one could leverage this to reduce
+the search space for performing prime factorization.
+
+Define the {\it Riemann Zeta function} for $s$ real or complex:
+$$
+\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s}.
+$$
+Note that the sum converges uniformly for all $s > 1$, and 
+$\zeta(s)$ is continuous for $s>1$.
+
+Interestingly, it can be proven that 
+$$
+\zeta(s) = \prod_{p\text{ prime}} \frac{1}{1-1/p^s}
+$$
+where the right hand side is called the {\it Euler product}.
+Because $\zeta(1)$ diverges, it follows by taking a log of the Euler product
+that $\sum_{p\text{ prime}}\frac{1}{p}$ diverges.
+The {\it infinitude of primes} follows as an immediate corollary, since 
+if the primes were finite, the previous sum would be finite trivially
+(though there exists a much simpler proof by contradiction).
+
+Dirichlet generalized the above by showing that
+$$
+\sum_{n=1}^\infty \frac{\chi_q(n)}{n^s} 
+= \prod_{p\text{ prime}} \frac{1}{1-\chi_q(n)/p^s}
+$$
+for all functions $\chi_q$ which assign $\chi_q(n) = 1$ if $q$ and
+$n$ are coprime, and $\chi_q(n) = 0$ otherwise.
+
+Consequently, the following generalization is obtained:
+$$
+\sum_{p \equiv \ell \text{ mod } q} \frac{1}{p} \rightarrow \infty
+$$
+for all coprime $\ell$ and $q$, where the sum is taken over prime numbers $p$.
+This implies that there are infinitely many primes in every arithmetic
+progression $a_n = \ell + nq$ where $q$ and $\ell$ are coprime.
+
+\end{document}

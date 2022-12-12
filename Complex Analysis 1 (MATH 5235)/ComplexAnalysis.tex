@@ -1,0 +1,399 @@
+% preamble
+\documentclass[12pt]{article}
+\usepackage{geometry, amsmath, amssymb, caption, subcaption, enumerate, upgreek}
+\geometry{
+letterpaper,
+total={6.5in,9in},
+left=1in,
+top=1in}
+\parindent = 0pt
+\parskip = 6pt
+
+% document
+\begin{document}
+\section*{Complex Analysis}
+Tyler Chang\\
+\today
+
+\subsection*{Basic Definitions}
+
+Let $z = re^{i\theta} = x + iy$ be a complex number.
+\begin{itemize}
+	\item $|z|=r=\sqrt{x^2+y^2}$ is called the {\it modulus} of $z$.
+	\item arg~$z=\theta$ is called the {\it argument} of $z$.
+		\begin{itemize}
+			\item Note that arg~$z$ is not well-defined
+				since $re^{i\theta}=re^{i(\theta+2\pi m)}$
+				for all $m\in\mathbb{Z}$.
+		\end{itemize}
+	\item Arg~$z=\theta$, where $-\pi < \theta \leq \pi$ is called
+		the {\it principle argument} of $z$.
+		\begin{itemize}
+			\item Note that Arg~$z$ is well-defined, but not
+				continuous since there is a ``slit'' on
+				$\mathbb{R}_-$ (the negative real-axis),
+				where Arg~$z$ ``jumps'' in value from
+				$-\pi$ to $\pi$ or vice versa.
+		\end{itemize}
+\end{itemize}
+
+Let $f = u + iv$ be a complex-valued function.
+\begin{itemize}
+	\item If $f$ is one-to-one on $\mathbb{C} \setminus \mathbb{R}_-$,
+		the {\it inverse} is not well-defined unless it is
+		independent of arg~$z$.
+		For example, the inverse of $e^{i\theta}$ is given by
+		$\log z = \log |z| + i$arg~$z$, and therefore not
+		well-defined. We call the range of arg~$z$ the {\it branch}
+		of $\log z$. Log~$z = \log|z| + i$Arg~$z$ is then called
+		the {\it principle branch} of the function, and is
+		well-defined, but typically not continuous.
+	\item A complex-valued function is said to be a
+		{\it linear fractional transformation} (LFT) if it is of
+		the form $w(z) =\frac{ax + b}{cz + d}$ where 
+		$a,b,c,d\in\mathbb{C}$ and $ad-bc\neq 0$.
+		\begin{itemize}
+			\item Every LFT is a composition of complex-valued
+				translations, dilations, and inversions.
+			\item 3 pairs $(z_1, w(z_1))$, $(z_2, w(z_2))$,
+				and $(z_3, w(z_3))$ uniquely determine an
+				LFT.
+			\item The image of a circle or line under an LFT is
+				either a circle or a line.
+		\end{itemize}
+	\item A complex-valued function $f$ is said to be differentiable
+		at a point $z_0$ if
+		${\lim \atop z\rightarrow z_0}\frac{f(z)-f(z_0)}{z-z_0}$
+		exists (for every direction, determined by arg~$z$).
+		If the limit exists, it is called $f'(z)$.
+\end{itemize}
+
+Let $\gamma(t)$ where $a\leq t\leq b$ be a {\it path} from $A$ to $B$.
+Let $P = u_1(x,y) + iv_1(x,y)$, $Q = u_2(x,y) + iv_2(x,y)$ be a
+complex-valued functions (in the complex plane with $z = x + iy$).
+\begin{itemize}
+	\item $P$~$dx + Q$~$dy$ is called a {\it differential}.
+	\item $\int_\gamma P$~$dx+Q$~$dy=\int_\gamma P dx+\int_\gamma Q dy$
+		is called the {\it line integral} of that differential.
+	\item $P$~$dx+Q$~$dy$ is called {\it exact} if there exists
+		$dh = P$~$dx + Q$~$dy$.
+	\item The line integral $\int_\gamma P$~$dx+Q$~$dy$ is 
+		{\it independent of path} if it has the same value for all
+		paths with the same endpoints, i.e., the differential
+		$P$~$dx + Q$~$dy$ is somehow {\it conservative} in a sense,
+		depending only on its endpoints.
+	\item $P$~$dx+Q$~$dy$ is exact if and only if 
+		$\int_\gamma P$~$dx+Q$~$dy$ is independent of path.
+	\item A differential $P$~$dx+Q$~$dy$ is {\it closed} if 
+		$\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}$.
+	\item Exact always implies closed, but closed only implies exact
+		in a {\it star-shaped region} $D$, meaning every point in $D$
+		is ``visible'' from some central point.
+	\item {\it Green's Theorem} tells us that if $P$ and $Q$ are smooth 
+		on a domain $D$ with piecewise smooth boundary, and the
+		partials of $P$ and $Q$ exist and are continuous to 
+		$\partial D$, then
+		$$
+		\int_{\partial D} P\text{ }dx + Q\text{ }dy 
+		= \int\int_D \left(\frac{\partial Q}{\partial x} -
+		\frac{\partial P}{\partial y}\right) dx\text{ }dy.
+		$$
+\end{itemize}
+
+\subsection*{Holomorphic/Analytic Functions}
+
+A complex function $f=u+iv$ is said to be {\it holomorphic} or 
+{\it analytic} on an open
+domain $D$ if $f$ is once continuously differentiable everywhere in $D$.
+Some equivalent conditions follow:
+\begin{itemize}
+	\item Both partial derivatives of $u$ and $v$ exist in $D$ and
+		{\it the Cauchy-Riemann equations} hold:
+		$$
+		\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}
+		\quad\text{and}\quad
+		\frac{\partial v}{\partial x}=-\frac{\partial u}{\partial y}.
+		$$
+	\item $f$~$dz$ is closed. Note, this implies that $f$~$dz$ is exact
+		if $D$ is star-shaped. This is important because it implies
+		$\int_\gamma f$~$dz$ is independent of paths.
+	\item $f$ is continuous and $\int_{\partial R}f$~$dz=0$ for all
+		rectangles $R$ in $D$.
+	\item If $f'(z)$ exists for all $z\in D$, then $f'$ must be
+		continuous, so $f$ is automatically analytic if it is
+		just differentiable everywhere in $D$.
+\end{itemize}
+
+For $f$ analytic in $D$, the {\it Fundamental Theorem of Calculus} holds,
+i.e., the integral $\int_\gamma f' dz = f(B) - f(A)$ is independent of paths.
+Furthermore, in a star-shaped region, there exists an analytic $F$ such
+that $F'=f$ and $F(z) = \int_{z_0}^z f(\xi)d\xi$.
+
+If $D$ is star-shaped and bounded with piecewise smooth boundary and $f$
+is continuous on ${\overline D}$, then by Green's theorem
+$\int_{\partial D} f$~$dz = 0$ ({\it Cauchy's thoerem}). The
+{\it Cauchy Integral Formula} follows:
+$$
+f(z) = \frac{1}{2\pi i} \int_{\partial D}\frac{f(w)}{w-z} dw.
+$$
+It follows by interchanging the order of integration that $f$ is infinitely
+differentiable and
+$$
+f^{(m)}(z) = \frac{m!}{2\pi i}\int_{\partial D} \frac{f(w)}{(w-z)^{m+1}} dw.
+$$
+In fact, the closed path $\partial D$ can be replaced by any loop in
+$D$ enclosing $z$.
+
+Furthermore, for $f$ analytic in a ball $B(r,z_0)$ centered at $z_0$ with
+radius $r$, then the {\it Taylor series}
+$$f(z) = \sum_{k=0}^\infty \frac{f^{(m)}(z_0)}{m!}(z-z_0)^k$$
+converges uniformly.
+The largest radius $R$ for which $f$ is analytic in $B(R,z_0)$ is called the 
+{\it radius of convergence}.
+As a corollary, if $f$ is analytic in a star-shaped region, then $f$ is
+determined globally by its local behavior, since $f$'s Taylor series at
+each point can be extrapolated to determine $f$'s behavior in the entire
+star-shaped region.
+A function $f$ that is analytic on the entire complex plane is called
+{\it entire}, and {\it Liouville's theorem} tells us that every bounded
+entire function is identically equal to a constant.
+
+If $f$ is not analytic in a ball around $z_0$, but is instead analytic
+in the annulus $r_1 < |z - z_0| < r_2$, then $f$ has a {\it Laurent series}
+$$f(z)=\sum_{k=-\infty}^{\infty} a_k (z-z_0)^k,$$
+where $a_k = \frac{1}{2\pi i}\int_{|z-z_0|=r}\frac{f(z)}{(z-z_0)^{k+1}} dz$,
+with the line integral evaluated counterclockwise.
+Now consider any {\it singularity}, i.e., point $s$ where $f$ is not
+analytic. If $s$ is isolated, then in some annulus $0<|z-s|<\varepsilon$,
+$f$ is analytic with a Laurent series 
+$f(z)=\sum_{k=-\infty}^\infty a_k(z-s)^k$.
+\begin{itemize}
+	\item If all $a_k = 0$ for all $k < 0$, then $f$ is a
+		{\it removable singularity}, meaning $f$ is actually
+		analytic in the ball $B(\varepsilon,s)$.
+	\item If $a_k \neq 0$ for only finitely many $k < 0$, then $s$
+		is a {\it pole}, meaning $f$ behaves like an analytic
+		function near $a_k$, but diverges such that
+		$f(s)\rightarrow\infty$.
+	\item If $a_k = 0$ for infinitely many $k < 0$, then $s$ is an
+		{\it essential singularity}, meaning
+		${\lim \atop z\rightarrow s}f(z)$ does not exist. In fact,
+		the limit of a sequence $f(z_n)$ where $z_n\rightarrow s$
+		attains nearly every value, depending on the path
+		taken by $z_n$.
+\end{itemize}
+A function $f$ that is analytic except at isolated singularities, each of
+which is a pole, is called {\it meromorphic}. A function $f$ is
+meromorphic in $\mathbb{C}^* = \mathbb{C}\cup\{\infty\}$ if and only if
+$f$ is {\it rational}.
+
+If $f$ is analytic and one-to-one in $D$, then $f$ is said to be
+{\it univalent} on $D$. Every analytic function $f$ is univalent except
+in a neighborhood of any {\it critical points}
+(points where $f'(z) = 0$). Furthermore, if $f$ is nonconstant,
+then by the {\it open mapping theorem}, $f$ maps open sets to open
+sets. If follows that $f^{-1}$ exists and is analytic except in a
+neighborhood of $f$'s critical points. Furthermore, if $f$ is
+univalent, then $f$ is {\it conformal}, meaning $f$ preserves angles.
+
+\subsection*{Harmonic Functions}
+
+A function $u(x,y)$ on a two-dimensional domain $D$ is said to be
+{\it harmonic} if it satisfies Laplace's equation:
+$\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0$.
+If $f = u + iv$ is an analytic function, then $u$ and $v$ are real-valued
+harmonic functions. It follows that every analytic function is harmonic.
+Furthermore, for all $z_0\in D$, every harmonic function $u$ has a local
+{\it harmonic conjugate}, i.e., a harmonic function $v$ such that
+$f = u + iv$ is analytic in some neighborhood of $z_0$. If $D$ is
+star-shaped, then $v$ is a harmonic conjugate to $u$ on all of $D$.
+
+Every harmonic function also satisfies the {\it mean value property},
+$$
+u(z_0) = \frac{1}{2\pi}\int^{2\pi}_0 u(z_0 + re^{i\theta})d\theta.
+$$
+If $h$ is a bounded complex-valued harmonic function on $D$ that
+extends to the boundary, then $h$ must attain its maximum on
+$\partial D$. Furthermore, if $|h(z)|\leq M$ for all $z\in D$
+and $|h(z_0)| = M$ for some $z_0\in D$, then $h \equiv C$, where $C$
+is a constant. These properties are often referred to as the
+{\it maximum principle}.
+
+Dirichlet showed that if $h(\theta)$ is continuous on a circle $S$, then
+there exists a unique harmonic function ${\tilde h}(re^{i\theta})$ defined
+on the disk $\mathbb{D}$ with boundary $S$ such that ${\tilde h} = h$ on $S$.
+His solution is given by
+$$
+{\tilde h}(re^{i\theta}) = \frac{1}{2\pi}\int_{-\pi}^\pi 
+h(e^{i(\theta - \phi)})P_r(\phi)d\phi
+$$
+where $P_r(\phi) = \sum_{k=-\infty}^\infty r^{|k|} e^{ik\phi}$ is
+the {\it Poisson kernel}.
+
+\subsection*{Contour Integration and the Residue Theorem}
+
+The {\it residue theorem} generalizes Cauchy's theorem.
+Let $z_0$ be an isolated singularity of $f(z)$. Then if 
+$f(z) = \sum_{-\infty}^\infty a_n (z-z_0)^n$, $0 < |z-z_0| <\rho$,
+then the {\it residue} of $f$ at $z_0$ is given
+$$
+\text{Res}(f,z_0) = a_{-1} = \frac{1}{2\pi i}\int_{|z-z_0|=r<\rho} f(z) dz.
+$$
+Furthermore, if $D$ is a star-shaped bounded domain in $\mathbb{C}$ with
+p.w. smooth boundary (as in Cauchy's theorem), and $f$ is meromorphic
+in $D$ (with singularities $z_i$) and smooth in ${\overline D}$, then
+$$
+\int_{\partial D} f(z) dz = 2\pi i \sum_{i=1}^\infty\text{Res}(f(z),z_i).
+$$
+
+{\it Contour integration} is a process for integrating meromorphic 
+(or equivalently, rational) functions $f$ using the residue theorem.
+Suppose we wish to integrate a rational function $f$ over some path $\gamma$
+(most commonly, a subset of the real axis, i.e., a definite real
+integral). Suppose $f$ cannot be integrated over $\gamma$, but can
+be integrated over another path $\phi$ in $D$, with the same endpoints
+as $\gamma$. Then using the residue theorem, 
+$\int_\gamma f = \sum_{i=1}^n\text{Res}(f(z),z_i)-\int_\phi f$
+where $z_i$ are singularities contained in the loop $\gamma \cup \phi$,
+and each integral is taken in the counterclockwise direction.
+
+To make residues easy to compute, there are three rules:
+\begin{itemize}
+	\item If $z_0$ is a {\it simple pole} (only $a_{-1}$ is nonzero)
+		then $a_{-1} = \lim_{z\rightarrow z_0}(z-z_0)f(z)$.
+	\item If $z_0$ is a pole of order $n$, then
+		$a_{-1}=\lim_{z\rightarrow z_0}\frac{d^{(n+1)}}{dz^{(n+1)}}\left((z-z_0)^n f(z)\right)$.
+	\item If $f$, $g$ are analytic at $z_0$ and $g$ has a simple zero
+		at $z_0$, then $\frac{f}{g}$ has a simple pole if and
+		only if $f(z_0) \neq 0$.
+\end{itemize}
+
+Furthermore, when constructing loops, one must avoid singularities.
+The {\it fractional residue theorem} tells us that for a simple pole $z_0$,
+for $C_\varepsilon$ an arc of the circle $|z - z_0| =\varepsilon$ with
+an angle of $\alpha > 0$ oriented counterclockwise, 
+$\lim_{\varepsilon\rightarrow 0} \int_{C_\varepsilon} f(z) dz = \alpha i$Res$(f,z_0)$.
+
+\subsection*{Homotopy, Winding Numbers, and Simply Connected Regions}
+
+The {\it logarithmic integral} of an analytic function $f$ over a closed
+curve $\gamma$ in $D$ is given by 
+$\frac{1}{2\pi i}\int_\gamma \frac{f'}{f} dz = \frac{1}{2\pi}\int_\gamma d($arg$f(z))dz$.
+The logarithmic integral is always a nonnegative integer, and the change in
+arg~$f$ around $\gamma$ is given by $2\pi$ times the logarithmic integral.
+If $D$ is a bounded domain, with p.w. smooth boundary and $f$ is meromorphic
+in ${\overline D}$ with no zeros or poles on $\partial D$, then
+the logarithmic integral of $f$ around the boundary of $D$ is equal to
+$N_0 - N_\infty$ where $N_0$ denotes the number of zeros of $f$ in $D$,
+and $N_\infty$ denotes the number of poles (with multiplicity). This
+property is called the {\it argument principle} and can be used to perform
+root-finding on $f$. Furthermore, if $g$ is also analytic in ${\overline D}$
+and $|f|$ dominates $|g|$, then $f$ and $f+g$ have the same number of zeros
+in $D$.
+
+Furthermore, if $f(z_0) = w_0$, then there exists a neighborhood
+$N_\delta = |w-w_0| < \delta$ in which $f$ attains all $w\in N_\delta$
+the same number of times. Let $U_\varepsilon$ be a sufficiently small
+neighborhood of $z_0$. Then the number of times $f$ hits $w\in N_\delta$
+is given by the {\it winding number} of the image
+$f(\partial U_\varepsilon)$ around $w_0$.
+
+The {\it winding number} of a closed curve $\gamma(t)$ ($a \leq t \leq b$)
+about a point $z_0$ is given by
+$$
+W(\gamma, z_0) = \frac{h(b) - h(a)}{2\pi}
+$$
+and tells the integer number of times $\gamma$ ``wraps around'' $z_0$
+(i.e., the change in arg$(z-z_0)$ around $\gamma$ divided by $2\pi$).
+Two curves $\gamma_0(t)$ and $\gamma_1(t)$ defined in a domain $D$
+are {\it homotopic} if there exists a curve $\gamma(s,t)$, $0\leq s\leq t$,
+such that $\gamma(0,t)=\gamma_0(t)$, $\gamma(1,t)=\gamma_1(t)$, and
+$\gamma(s,t)$ is jointly continuous in both $s$ and $t$. If $\gamma_0$
+is a point, then $\gamma_1(t)$ is said to be homotopic to a point.
+Equivalently, this implies that $W(\gamma_1(t),\xi)=0$ for all
+$\xi\not\in D$. A {\it simply connected} domain is defined as a domain
+in which every curve $\gamma$ is homotopic to a point.
+
+This terminology allows us to generalize Cauchy's theorem, so that if $f$
+is analytic in $D$ with p.w. smooth boundary, and $\gamma\subset D$ is
+a closed curve with $W(\gamma, \xi) = 0$ for all $\xi\not\in D$, then 
+$\int_\gamma f(z) dz = 0$. Note, this implies that an analytic $f$ is
+infinitely differentiable in any {\it simply connected domain}.
+Furthermore, the condition that $\partial D$ is p.w. smooth can be
+dropped if we are willing to ``back off'' slightly from the edge of $D$.
+
+\subsection*{Analytic Continuation and Reflection}
+
+Consider now a function $f$ defined by its Taylor series
+$f(z) = \sum_{n=0}^\infty a_n (z - z_0)^n$. In some ball $B(R,z_0)$.
+The goal of this section is to extend $f$ to its entire {\it natural domain}.
+
+In fact, if $\gamma$ is any (not necessarilly closed) curve on which
+$f$ has no singularities, and we can define a sequence of partially
+overlapping balls $B(R_n, z_n)$ such that each $z_n\in\gamma$, then
+$f$ can be extended along the entire path $\gamma$ by power series centered
+at $z_n$. This process is called {\it analytic continuation}, and the
+resulting function $f$ will be analytic in $\cup_{n} B(R_n,z_n)$ if and only
+if this sequence of balls does not ``wrap around'' any singularities
+(in which case, $f$ may not agree where $B(R_n,z_n)$ wrap back on
+themselves). Furthermore, if $f$ can be continued along two paths
+$\gamma_0$ and $\gamma_1$ which are homotopic by a sequence $\gamma_s$
+of paths along which $f$ can also be analytically continued, then
+the continuations of $f$ along $\gamma_0$ and $\gamma_1$ agrees
+(the {\it Monodromy theorem}).
+It follows that $f$ can be analytically continued along any path in a
+simply connected domain.
+
+Alternatively, if $D$ is a domain that is symmetric about the real-axis,
+and $f^+$ is analytic on the top-half of $D$ ($D^+$), then $f^+$ can be
+reflected across the real-axis to the bottom half $D_-$ by
+$f^-(z) = {\overline f({\overline z})}$ for all $z\in D_-$.
+This reflecton defines an analytic function $f$ on all of $D$ if
+$\lim_{z\rightarrow\mathbb{R}} f^+(z) \in\mathbb{R}$ for all limit points
+in $D\cap\mathbb{R}$. It follows that by applying a LFT, to any domain
+$E$ whose boundary shares an arc or line in $\mathbb{C}^*$, a similar
+reflection can be performed, if $E$'s image under the LFT satisfies
+the properties above.
+
+\subsection*{Hyperbolic and Spherical Geometries}
+
+Let $f : \mathbb{D} \rightarrow \mathbb{D}$ be analytic (where $\mathbb{D}$
+denotes the open unit disk). Then {\it Schwarz's lemma} tells us that
+if $f(0)=0$ and $|f(z)| \leq |z|$, then $f$ is a rotation if any
+$z_0\neq 0$ satisfies $|f(z_0)| = |z_0|$, and a contraction otherwise.
+This generalizes to {\it Pick's lemma}: If $f$
+$f:\mathbb{D}\rightarrow\mathbb{D}$ is analytic then
+$$
+|f'(z)| \leq \frac{1-|f(z)|^2}{1-|z|^2},
+$$
+and if equality holds for any $z_0\in D$, then $f$ is a conformal
+self-map of $D$.
+
+Let $f : \mathbb{D} \rightarrow \mathbb{D}$ be conformal.
+The {\it hyperbolic length} of a curve $\gamma$ is defined by
+$$
+\ell(\gamma) = 2\int_\gamma \frac{|dz|}{1-|z|^2},
+$$
+and $\ell(\gamma) = \ell(f\circ \gamma)$.
+The {\it hyperbolic distance} between two points is then defined by
+$$
+\rho(z_1, z_2) = \inf_\gamma \ell(\gamma),
+$$
+where the $\inf$ is taken over all curves $\gamma$ connecting
+$z_1$ and $z_2$.
+Note that this $\inf$ is obtained for some unique path $\gamma$,
+called the {\it hyperbolic geodesic}.
+Note that in such a {\it hyperbolic geometry}, the sum of all angles
+in a triangle is strictly less than $180^\circ$.
+
+Similarly, the {\it chordal metric} is defined for two points $p$ and
+$q$ on $\mathbb{C}^*$ by taking the inverse stereoscopic projection of
+$\mathbb{C}^*$ onto the sphere, and computing the length of the line
+segment joining $p$ and $q$ on the sphere. The {\it chordal distance}
+is given by twice the length of the shortest such line segment
+(which corresponds to an arc of a great circle on the sphere).
+Note that in general, the {\it chordal geodesic} is not necessarilly
+unique, and the sum of angles in a triangle is strictly greater than
+$180^\circ$.
+
+\end{document}
